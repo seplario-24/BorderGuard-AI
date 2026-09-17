@@ -54,6 +54,7 @@ export class BorderGuardApp {
       settings: {
         checkpointName: 'DEL-T3-INTL',
         laneNumber: '04',
+        officerName: 'Toyesh Jalamkar',
         officerRole: 'Senior Immigration Inspector',
         thresholdLow: 30,
         thresholdReview: 69,

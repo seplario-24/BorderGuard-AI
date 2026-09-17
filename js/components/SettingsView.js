@@ -9,6 +9,7 @@ export const SettingsView = {
     const settings = state.settings || {
       checkpointName: 'DEL-T3-INTL',
       laneNumber: '04',
+      officerName: 'Toyesh Jalamkar',
       officerRole: 'Senior Immigration Inspector',
       thresholdLow: 30,
       thresholdReview: 69,
@@ -51,6 +52,11 @@ export const SettingsView = {
             <div>
               <label style="display: block; color: var(--text-muted); font-weight: 700; margin-bottom: 4px;">INSPECTION LANE NUMBER</label>
               <input type="text" id="settingLane" value="${settings.laneNumber}" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 8px 12px; color: #f8fafc; font-family: var(--font-mono); outline: none;"/>
+            </div>
+
+            <div>
+              <label style="display: block; color: var(--text-muted); font-weight: 700; margin-bottom: 4px;">INSPECTOR / OFFICER NAME</label>
+              <input type="text" id="settingOfficerName" value="${settings.officerName || 'Toyesh Jalamkar'}" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 8px 12px; color: #f8fafc; outline: none;"/>
             </div>
 
             <div>
@@ -172,6 +178,7 @@ export const SettingsView = {
         app.updateSettings({
           checkpointName: document.getElementById('settingCheckpoint')?.value || 'DEL-T3-INTL',
           laneNumber: document.getElementById('settingLane')?.value || '04',
+          officerName: document.getElementById('settingOfficerName')?.value || 'Toyesh Jalamkar',
           officerRole: document.getElementById('settingRole')?.value || 'Senior Immigration Inspector',
           thresholdFace: parseFloat(document.getElementById('settingFaceThreshold')?.value || 80),
           weights: {

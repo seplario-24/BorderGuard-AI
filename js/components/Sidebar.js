@@ -53,10 +53,10 @@ export const Sidebar = {
       <div class="sidebar-bottom">
         <div class="officer-badge-card">
           <div class="officer-avatar">
-            KS
+            ${(state.settings?.officerName ? state.settings.officerName.replace(/^Insp\.\s*/i, '').trim().split(/\s+/).map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : 'TJ') || 'TJ'}
           </div>
           <div class="officer-details">
-            <div class="officer-name">Insp. K. Sharma</div>
+            <div class="officer-name">${state.settings?.officerName ? (state.settings.officerName.startsWith('Insp.') ? state.settings.officerName : `Insp. ${state.settings.officerName}`) : 'Insp. Toyesh Jalamkar'}</div>
             <div class="officer-role">ID: OFF-4819 • Shift A</div>
           </div>
         </div>
