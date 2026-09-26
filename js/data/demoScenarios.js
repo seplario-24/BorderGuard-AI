@@ -35,7 +35,7 @@ export const DemoScenarios = [
       expiryDate: '2030-05-13',
       issuingAuthority: 'PASSPORT OFFICE DELHI',
       mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02'
+      mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -51,7 +51,7 @@ export const DemoScenarios = [
         expiryDate: '2030-05-13',
         issuingAuthority: 'PASSPORT OFFICE DELHI',
         mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02',
+        mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0',
         personId: 'john_doe'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('john_doe'),
@@ -130,7 +130,7 @@ export const DemoScenarios = [
       issuingAuthority: 'PASSPORT OFFICE DELHI',
       // Notice: MRZ still contains the original genuine number and check digit!
       mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02'
+      mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -146,7 +146,7 @@ export const DemoScenarios = [
         expiryDate: '2030-05-13',
         issuingAuthority: 'PASSPORT OFFICE DELHI',
         mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02',
+        mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0',
         personId: 'john_doe'
       }, { alteredNumber: true }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('john_doe'),
@@ -226,7 +226,7 @@ export const DemoScenarios = [
       expiryDate: '2031-08-19',
       issuingAuthority: 'POLICIA FEDERAL BRASILIA',
       mrzLine1: 'P<BRASILVA<<MARIA<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'P5831042<4BRA9204106F3108194<<<<<<<<<<<<<<08'
+      mrzLine2: 'P5831042<6BRA9204100F3108192<<<<<<<<<<<<<<<4'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -242,7 +242,7 @@ export const DemoScenarios = [
         expiryDate: '2031-08-19',
         issuingAuthority: 'POLICIA FEDERAL BRASILIA',
         mrzLine1: 'P<BRASILVA<<MARIA<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'P5831042<4BRA9204106F3108194<<<<<<<<<<<<<<08',
+        mrzLine2: 'P5831042<6BRA9204100F3108192<<<<<<<<<<<<<<<4',
         personId: 'maria_silva'
       }, { photoSpliced: true }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
@@ -323,7 +323,7 @@ export const DemoScenarios = [
       expiryDate: '2024-02-11', // Expired!
       issuingAuthority: 'US DEPT OF STATE',
       mrzLine1: 'P<USAMILLER<<DAVID<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'E9821430<3USA8411225M2402118<<<<<<<<<<<<<<04'
+      mrzLine2: 'E9821430<5USA8411224M2402114<<<<<<<<<<<<<<<2'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -339,7 +339,7 @@ export const DemoScenarios = [
         expiryDate: '2024-02-11',
         issuingAuthority: 'US DEPT OF STATE',
         mrzLine1: 'P<USAMILLER<<DAVID<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'E9821430<3USA8411225M2402118<<<<<<<<<<<<<<04',
+        mrzLine2: 'E9821430<5USA8411224M2402114<<<<<<<<<<<<<<<2',
         personId: 'david_miller'
       }, { expired: true }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('david_miller'),
@@ -419,7 +419,7 @@ export const DemoScenarios = [
       expiryDate: '2029-11-03',
       issuingAuthority: 'HMPO LONDON',
       mrzLine1: 'P<GBRMORGAN<<ALEX<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'Z2948175<6GBR8907251M2911038<<<<<<<<<<<<<<04'
+      mrzLine2: 'Z2948175<7GBR8907253M2911032<<<<<<<<<<<<<<<6'
     },
     visaData: {
       visaNumber: 'V-SUSP-7701',
@@ -445,7 +445,7 @@ export const DemoScenarios = [
         expiryDate: '2029-11-03',
         issuingAuthority: 'HMPO LONDON',
         mrzLine1: 'P<GBRMORGAN<<ALEX<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'Z2948175<6GBR8907251M2911038<<<<<<<<<<<<<<04',
+        mrzLine2: 'Z2948175<7GBR8907253M2911032<<<<<<<<<<<<<<<6',
         personId: 'alex_morgan'
       }),
       secondaryDocUri: SampleDocuments.getVisaSvg({
@@ -526,7 +526,7 @@ export const DemoScenarios = [
       expiryDate: '2030-05-13',
       issuingAuthority: 'PASSPORT OFFICE DELHI',
       mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02'
+      mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -542,7 +542,7 @@ export const DemoScenarios = [
         expiryDate: '2030-05-13',
         issuingAuthority: 'PASSPORT OFFICE DELHI',
         mrzLine1: 'P<INDDOE<<JOHN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02',
+        mrzLine2: 'X7429136<7IND9508152M3005132<<<<<<<<<<<<<<<0',
         personId: 'john_doe'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('john_doe'),
@@ -613,7 +613,7 @@ export const DemoScenarios = [
       expiryDate: '2027-01-09',
       issuingAuthority: 'MINISTRY OF INTERIOR',
       mrzLine1: 'P<SYRRASHID<<TARIQ<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'W7789012<8SYR8703124M2701092<<<<<<<<<<<<<<06'
+      mrzLine2: 'W7789012<8SYR8703123M2701091<<<<<<<<<<<<<<<8'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -629,7 +629,7 @@ export const DemoScenarios = [
         expiryDate: '2027-01-09',
         issuingAuthority: 'MINISTRY OF INTERIOR',
         mrzLine1: 'P<SYRRASHID<<TARIQ<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'W7789012<8SYR8703124M2701092<<<<<<<<<<<<<<06',
+        mrzLine2: 'W7789012<8SYR8703123M2701091<<<<<<<<<<<<<<<8',
         personId: 'impersonator_male'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('impersonator_male'),
@@ -699,13 +699,13 @@ export const DemoScenarios = [
     document: {
       type: 'PASSPORT',
       subType: 'Standard Biometric (Offline Node)',
-      docNumber: 'X7429136',
+      docNumber: 'S8921450',
       countryCode: 'IND',
       issueDate: '2020-05-14',
       expiryDate: '2030-05-13',
       issuingAuthority: 'PASSPORT OFFICE DELHI',
       mrzLine1: 'P<INDSHARMA<<AMITA<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'X7429136<8IND9311045F3005138<<<<<<<<<<<<<<06'
+      mrzLine2: 'S8921450<5IND9311044F3005132<<<<<<<<<<<<<<<6'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -713,7 +713,7 @@ export const DemoScenarios = [
         countryCode: 'IND',
         surname: 'SHARMA',
         givenNames: 'AMITA',
-        docNumber: 'X7429136',
+        docNumber: 'S8921450',
         nationality: 'INDIAN',
         sex: 'F',
         dob: '1993-11-04',
@@ -721,7 +721,7 @@ export const DemoScenarios = [
         expiryDate: '2030-05-13',
         issuingAuthority: 'PASSPORT OFFICE DELHI',
         mrzLine1: 'P<INDSHARMA<<AMITA<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'X7429136<8IND9311045F3005138<<<<<<<<<<<<<<06',
+        mrzLine2: 'S8921450<5IND9311044F3005132<<<<<<<<<<<<<<<6',
         personId: 'maria_silva'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
@@ -731,7 +731,7 @@ export const DemoScenarios = [
       fullName: 'AMITA SHARMA',
       surname: 'SHARMA',
       givenNames: 'AMITA',
-      documentNumber: 'X7429136',
+      documentNumber: 'S8921450',
       nationality: 'IND',
       dob: '1993-11-04',
       sex: 'F',
@@ -792,7 +792,7 @@ export const DemoScenarios = [
       issuingAuthority: 'PASSPORT OFFICE MUMBAI',
       // MRZ encodes DOB as 1985-05-12 (85) but visual shows 1995-05-12
       mrzLine1: 'P<INDNAIR<<PRIYA<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'N4419273<6IND8505129F3203178<<<<<<<<<<<<<<<<04'
+      mrzLine2: 'N4419273<1IND8505121F3203178<<<<<<<<<<<<<<<6'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -808,7 +808,7 @@ export const DemoScenarios = [
         expiryDate: '2032-03-17',
         issuingAuthority: 'PASSPORT OFFICE MUMBAI',
         mrzLine1: 'P<INDNAIR<<PRIYA<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'N4419273<6IND8505129F3203178<<<<<<<<<<<<<<<<04',
+        mrzLine2: 'N4419273<1IND8505121F3203178<<<<<<<<<<<<<<<6',
         personId: 'maria_silva'
       }, { mrzDobMismatch: true }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
@@ -889,7 +889,7 @@ export const DemoScenarios = [
       expiryDate: '2029-04-14',
       issuingAuthority: 'SECRETARIA DE RELACIONES EXTERIORES',
       mrzLine1: 'P<MEXREYES<<CAROLINA<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'M7741390<3MEX9006284F2904146<<<<<<<<<<<<<<<<02'
+      mrzLine2: 'M7741390<9MEX9006289F2904146<<<<<<<<<<<<<<<6'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -905,7 +905,7 @@ export const DemoScenarios = [
         expiryDate: '2029-04-14',
         issuingAuthority: 'SECRETARIA DE RELACIONES EXTERIORES',
         mrzLine1: 'P<MEXREYES<<CAROLINA<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'M7741390<3MEX9006284F2904146<<<<<<<<<<<<<<<<02',
+        mrzLine2: 'M7741390<9MEX9006289F2904146<<<<<<<<<<<<<<<6',
         personId: 'maria_silva'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
@@ -982,7 +982,7 @@ export const DemoScenarios = [
       expiryDate: '2031-11-19',
       issuingAuthority: 'PASSPORT OFFICE BANGALORE',
       mrzLine1: 'P<INDDOE<<JONATHAN<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-      mrzLine2: 'P7654321<9IND9508159M3111192<<<<<<<<<<<<<<<<04'
+      mrzLine2: 'P7654321<9IND9508152M3111194<<<<<<<<<<<<<<<2'
     },
     images: {
       docImageUri: SampleDocuments.getPassportSvg({
@@ -998,7 +998,7 @@ export const DemoScenarios = [
         expiryDate: '2031-11-19',
         issuingAuthority: 'PASSPORT OFFICE BANGALORE',
         mrzLine1: 'P<INDDOE<<JONATHAN<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-        mrzLine2: 'P7654321<9IND9508159M3111192<<<<<<<<<<<<<<<<04',
+        mrzLine2: 'P7654321<9IND9508152M3111194<<<<<<<<<<<<<<<2',
         personId: 'john_doe'
       }),
       extractedFaceUri: SampleDocuments.getPortraitSvg('john_doe'),

@@ -212,7 +212,42 @@ export const RiskService = {
       cumulativeRisk += weights.visaDate * 3.5;
     }
 
-    // 7. Liveness & Anti-Spoofing (Weight: 5%)
+    // 7. Special Registry Signals (Lost/Stolen & Multiple Identity)
+    if (db.lostStolen?.hasRecord) {
+      factors.push({
+        module: 'Lost & Stolen Registry (SLTD)',
+        label: 'Document reported lost or stolen',
+        delta: +32,
+        type: 'PENALTY',
+        explanation: `Simulated record [${db.lostStolen.record?.referenceId || 'LST'}]: Document reported lost/stolen on ${db.lostStolen.record?.reportedDate || 'registry'}. Physical document possession requires secondary validation.`
+      });
+      cumulativeRisk += 35;
+    }
+
+    if (db.multipleIdentity) {
+      factors.push({
+        module: 'Identity Resolution',
+        label: 'Candidate identity match detected',
+        delta: +18,
+        type: 'PENALTY',
+        explanation: `Candidate record [${db.multipleIdentity.referenceId}]: High biometric similarity with registered subject ${db.multipleIdentity.candidateRecord?.name} (${db.multipleIdentity.candidateRecord?.docNumber}). Authorized investigation required.`
+      });
+      cumulativeRisk += 20;
+    }
+
+    // 8. Image Quality Gate
+    if (evidenceBundle.imageQuality?.overallQuality === 'INSUFFICIENT') {
+      factors.push({
+        module: 'Image Quality Assessment',
+        label: 'Image quality insufficient for automated clearance',
+        delta: +15,
+        type: 'PENALTY',
+        explanation: 'Optical glare, blur, and insufficient DPI prevent reliable cryptographic checksum and forensic feature extraction. Document recapture required.'
+      });
+      cumulativeRisk += 15;
+    }
+
+    // 9. Liveness & Anti-Spoofing (Weight: 5%)
     const liveness = evidenceBundle.liveness || {};
     if (liveness.status === 'FAIL') {
       factors.push({
@@ -250,11 +285,11 @@ export const RiskService = {
     if (finalScore >= 70) {
       riskLevel = 'HIGH RISK';
       riskColor = '#ef4444'; // Red
-      recommendation = 'Refer for enhanced secondary inspection and supervisor review. High suspicion indicators detected.';
+      recommendation = 'Refer to Secondary Inspection Lane B for supervisor evaluation. Material fraud or identity discrepancies detected.';
     } else if (finalScore >= 31) {
       riskLevel = 'REVIEW REQUIRED';
       riskColor = '#f59e0b'; // Amber
-      recommendation = 'Additional officer review recommended. Document expiry, marginal biometrics, or minor registry flags noted.';
+      recommendation = 'Secondary verification recommended. Document expiry, marginal biometrics, or registry flags noted.';
     }
 
     // System confidence in its analysis (independent of risk)

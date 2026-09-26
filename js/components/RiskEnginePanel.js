@@ -174,7 +174,7 @@ export const RiskEnginePanel = {
               <line x1="15" y1="9" x2="9" y2="15"></line>
               <line x1="9" y1="9" x2="15" y2="15"></line>
             </svg>
-            <span>[ FLAG FOR INVESTIGATION ]</span>
+            <span>[ REFER TO SECONDARY INSPECTION ]</span>
           </button>
         </div>
       </div>

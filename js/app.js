@@ -79,7 +79,7 @@ export class BorderGuardApp {
           alertId: 'ALT-9821',
           severity: 'CRITICAL',
           type: 'DOCUMENT NUMBER ALTERATION',
-          screeningId: 'BG-2026-001248',
+          screeningId: 'BG-2026-100002',
           reason: 'MRZ check digit failure; OCR number A1234567 differs from MRZ string X7429136.',
           timestamp: '2026-09-11 01:14:02 UTC',
           status: 'NEW'
@@ -88,7 +88,7 @@ export class BorderGuardApp {
           alertId: 'ALT-9818',
           severity: 'CRITICAL',
           type: 'BIOMETRIC VERIFICATION EXCEPTION',
-          screeningId: 'BG-2026-001242',
+          screeningId: 'BG-2026-100006',
           reason: 'Facial similarity 38.4% is below the 80% verification threshold. Officer review required.',
           timestamp: '2026-09-11 00:48:19 UTC',
           status: 'NEW'
@@ -96,9 +96,9 @@ export class BorderGuardApp {
         {
           alertId: 'ALT-9805',
           severity: 'HIGH',
-          type: 'VISA ASSOCIATION MISMATCH',
-          screeningId: 'BG-2026-001235',
-          reason: 'Electronic visa presented was issued to a different passport number.',
+          type: 'LOST / STOLEN DOCUMENT NOTICE',
+          screeningId: 'BG-2026-100010',
+          reason: 'Document reported lost/stolen in central database registry on 2025-07-14.',
           timestamp: '2026-09-10 23:20:44 UTC',
           status: 'UNDER_REVIEW'
         },
@@ -106,7 +106,7 @@ export class BorderGuardApp {
           alertId: 'ALT-9791',
           severity: 'MEDIUM',
           type: 'EXPIRED TRAVEL DOCUMENT',
-          screeningId: 'BG-2026-001210',
+          screeningId: 'BG-2026-100004',
           reason: 'Passport validity expired on 2024-02-11.',
           timestamp: '2026-09-10 21:15:30 UTC',
           status: 'RESOLVED'
@@ -114,7 +114,7 @@ export class BorderGuardApp {
       ],
       screenings: [
         {
-          screeningId: 'BG-2026-001248',
+          screeningId: 'BG-2026-100002',
           timestamp: '2026-09-11 01:14:02 UTC',
           travellerRef: 'TRV-2026-04102',
           documentType: 'Passport (TD3)',
@@ -124,7 +124,7 @@ export class BorderGuardApp {
           tags: ['TAMPERING', 'ALTERED']
         },
         {
-          screeningId: 'BG-2026-001247',
+          screeningId: 'BG-2026-100001',
           timestamp: '2026-09-11 01:05:12 UTC',
           travellerRef: 'TRV-2026-08192',
           documentType: 'Passport (TD3)',
@@ -134,27 +134,17 @@ export class BorderGuardApp {
           tags: ['GENUINE']
         },
         {
-          screeningId: 'BG-2026-001242',
+          screeningId: 'BG-2026-100006',
           timestamp: '2026-09-11 00:48:19 UTC',
           travellerRef: 'TRV-2026-07730',
           documentType: 'Passport (TD3)',
           country: 'IND',
           riskScore: 88,
           actionTaken: 'REFERRED',
-          tags: ['FACE_REVIEW']
+          tags: ['FACE_MISMATCH']
         },
         {
-          screeningId: 'BG-2026-001235',
-          timestamp: '2026-09-10 23:20:44 UTC',
-          travellerRef: 'TRV-2026-05591',
-          documentType: 'Passport + Visa',
-          country: 'GBR',
-          riskScore: 72,
-          actionTaken: 'REVIEW',
-          tags: ['VISA_MISMATCH']
-        },
-        {
-          screeningId: 'BG-2026-001210',
+          screeningId: 'BG-2026-100004',
           timestamp: '2026-09-10 21:15:30 UTC',
           travellerRef: 'TRV-2026-01183',
           documentType: 'Passport (TD3)',
@@ -162,6 +152,26 @@ export class BorderGuardApp {
           riskScore: 58,
           actionTaken: 'REVIEW',
           tags: ['EXPIRED']
+        },
+        {
+          screeningId: 'BG-2026-100010',
+          timestamp: '2026-09-10 20:40:15 UTC',
+          travellerRef: 'TRV-2026-06724',
+          documentType: 'Passport (TD3)',
+          country: 'MEX',
+          riskScore: 78,
+          actionTaken: 'REFERRED',
+          tags: ['LOST_STOLEN']
+        },
+        {
+          screeningId: 'BG-2026-100011',
+          timestamp: '2026-09-10 19:22:40 UTC',
+          travellerRef: 'TRV-2026-09988',
+          documentType: 'Passport (TD3)',
+          country: 'IND',
+          riskScore: 55,
+          actionTaken: 'REVIEW',
+          tags: ['IDENTITY_LINK']
         }
       ]
     };
@@ -174,7 +184,7 @@ export class BorderGuardApp {
 
     // Populate initial baseline audit events
     await AuditService.logEvent(
-      'BG-2026-001248',
+      'BG-2026-100002',
       'System Kernel',
       'Station Lane 04 Boot & Algorithm Integrity Verified',
       'COMPLETED',
@@ -351,6 +361,7 @@ export class BorderGuardApp {
       visa: visaValidation,
       database: this.state.currentDBResults,
       liveness: found.liveness,
+      imageQuality: this.state.currentImageQuality,
       scenarioRiskOverride: found.scenarioRiskOverride,
       aiConfidence: 94.6
     };
@@ -548,8 +559,12 @@ export class BorderGuardApp {
     this.navigate('audit_trail');
   }
 
-  // Inspect Screening Record
+  // Inspect Screening Record (loads scenario deterministically)
   inspectScreening(screeningId) {
+    const sc = DemoScenarios.find(s => this.getScreeningIdForScenario(s.id) === screeningId);
+    if (sc) {
+      this.loadScenario(sc.id);
+    }
     this.navigate('new_screening');
   }
 

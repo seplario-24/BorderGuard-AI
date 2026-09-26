@@ -67,6 +67,17 @@ export const DatabaseService = {
       flagged: false,
       notes: 'Expired passport; renewal application pending in central registry.'
     },
+    'S8921450': {
+      docNumber: 'S8921450',
+      holderName: 'AMITA SHARMA',
+      status: 'VALID',
+      issuingCountry: 'IND',
+      issueDate: '2020-05-14',
+      expiryDate: '2030-05-13',
+      registeredFacialHash: 'hash_sha256_sharma_amita_884d',
+      flagged: false,
+      notes: 'Standard 10-year biometric passport issued at RPO Delhi. Edge-cached offline valid.'
+    },
     'N4419273': {
       docNumber: 'N4419273',
       holderName: 'PRIYA NAIR',

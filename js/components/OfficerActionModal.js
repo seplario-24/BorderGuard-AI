@@ -18,7 +18,7 @@ export const OfficerActionModal = {
       actionTitle = 'Confirm Referral for Review';
     } else if (action === 'INVESTIGATION') {
       actionColor = '#ef4444';
-      actionTitle = 'Confirm Flag for Investigation';
+      actionTitle = 'Confirm Referral to Secondary Inspection';
     }
 
     return `
@@ -36,7 +36,7 @@ export const OfficerActionModal = {
           <div style="background: var(--bg-subtle); border-left: 4px solid ${actionColor}; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px;">
             <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Selected Disposition</div>
             <div style="font-size: 16px; font-weight: 800; color: #f8fafc; font-family: var(--font-mono); margin-top: 2px;">
-              [ ${action} ]
+              [ ${action === 'INVESTIGATION' ? 'SECONDARY INSPECTION' : action} ]
             </div>
             <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${reason}</div>
           </div>

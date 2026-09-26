@@ -23,11 +23,19 @@ export const FaceVerification = {
           </div>
 
           <div style="position: relative; display: inline-block; width: 180px; height: 220px; border-radius: 6px; overflow: hidden; border: 2px solid var(--border-medium); background: #000;">
-            <img src="${images.extractedFaceUri || ''}" style="width: 100%; height: 100%; object-fit: cover;" alt="Document Face"/>
-            <!-- Biometric Bounding Box -->
-            <div style="position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border: 2px dashed #38bdf8; border-radius: 4px; pointer-events: none;">
-              <span style="position: absolute; top: 2px; left: 4px; font-size: 8px; font-family: monospace; color: #38bdf8; background: rgba(0,0,0,0.6); padding: 1px 3px;">PORTRAIT BOX</span>
-            </div>
+            ${images.extractedFaceUri ? `
+              <img src="${images.extractedFaceUri}" style="width: 100%; height: 100%; object-fit: cover;" alt="Document Face"/>
+              <!-- Biometric Bounding Box -->
+              <div style="position: absolute; top: 15%; left: 15%; width: 70%; height: 70%; border: 2px dashed #38bdf8; border-radius: 4px; pointer-events: none;">
+                <span style="position: absolute; top: 2px; left: 4px; font-size: 8px; font-family: monospace; color: #38bdf8; background: rgba(0,0,0,0.6); padding: 1px 3px;">PORTRAIT BOX</span>
+              </div>
+            ` : `
+              <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0b121e; color: #64748b; font-size: 11px; padding: 12px; text-align: center;">
+                <span style="font-size: 32px; margin-bottom: 8px;">📷</span>
+                <span style="font-weight: 700; color: #94a3b8;">PORTRAIT UNAVAILABLE</span>
+                <span style="font-size: 10px; color: #f59e0b; margin-top: 4px;">Low Quality / Blurred</span>
+              </div>
+            `}
           </div>
 
           <div style="margin-top: 10px; font-size: 11px; color: #94a3b8;">
@@ -43,13 +51,21 @@ export const FaceVerification = {
           </div>
 
           <div style="position: relative; display: inline-block; width: 180px; height: 220px; border-radius: 6px; overflow: hidden; border: 2px solid ${isMatch ? '#10b981' : '#ef4444'}; background: #000;">
-            <img src="${images.travellerLiveUri || ''}" style="width: 100%; height: 100%; object-fit: cover;" alt="Live Face"/>
-            <!-- Biometric Bounding Box -->
-            <div style="position: absolute; top: 12%; left: 15%; width: 70%; height: 75%; border: 2px solid ${isMatch ? '#10b981' : '#ef4444'}; border-radius: 4px; pointer-events: none;">
-              <span style="position: absolute; top: 2px; left: 4px; font-size: 8px; font-family: monospace; color: ${isMatch ? '#10b981' : '#ef4444'}; background: rgba(0,0,0,0.6); padding: 1px 3px;">
-                ${isMatch ? 'BIOMETRIC MATCH' : 'FACIAL MISMATCH'}
-              </span>
-            </div>
+            ${images.travellerLiveUri ? `
+              <img src="${images.travellerLiveUri}" style="width: 100%; height: 100%; object-fit: cover;" alt="Live Face"/>
+              <!-- Biometric Bounding Box -->
+              <div style="position: absolute; top: 12%; left: 15%; width: 70%; height: 75%; border: 2px solid ${isMatch ? '#10b981' : '#ef4444'}; border-radius: 4px; pointer-events: none;">
+                <span style="position: absolute; top: 2px; left: 4px; font-size: 8px; font-family: monospace; color: ${isMatch ? '#10b981' : '#ef4444'}; background: rgba(0,0,0,0.6); padding: 1px 3px;">
+                  ${isMatch ? 'BIOMETRIC MATCH' : 'FACIAL MISMATCH'}
+                </span>
+              </div>
+            ` : `
+              <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0b121e; color: #64748b; font-size: 11px; padding: 12px; text-align: center;">
+                <span style="font-size: 32px; margin-bottom: 8px;">👤</span>
+                <span style="font-weight: 700; color: #94a3b8;">LIVE FEED PAUSED</span>
+                <span style="font-size: 10px; color: #94a3b8; margin-top: 4px;">Recapture Required</span>
+              </div>
+            `}
           </div>
 
           <div style="margin-top: 10px; font-size: 11px; color: #94a3b8;">

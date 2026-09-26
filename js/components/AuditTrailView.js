@@ -92,7 +92,7 @@ export const AuditTrailView = {
               ${logs.map(log => `
                 <tr>
                   <td style="font-family: var(--font-mono); font-size: 11px; color: #64748b;">#${log.index}</td>
-                  <td style="font-family: var(--font-mono); font-size: 11px; color: #94a3b8;">${log.timestamp.split('T')[1]?.substring(0, 8)}</td>
+                  <td style="font-family: var(--font-mono); font-size: 11px; color: #94a3b8;">${log.timestamp.includes('T') ? log.timestamp.split('T')[1]?.substring(0, 8) : (log.timestamp.split(' ')[1] || log.timestamp)}</td>
                   <td style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">${log.screeningId}</td>
                   <td>
                     <span class="badge ${log.storageTier === 'LOCAL_OFFLINE_VAULT' ? 'badge-review' : 'badge-low'}" style="font-size: 9px;">

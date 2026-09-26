@@ -75,7 +75,7 @@ export const DatabasePanel = {
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
             <span style="font-size: 20px;">🟡</span>
             <strong style="font-size: 14px; color: #f59e0b;">CANDIDATE IDENTITY LINK — REF: ${multipleIdentity.referenceId}</strong>
-            <span class="badge badge-review" style="margin-left: auto;">INVESTIGATION REQUIRED</span>
+            <span class="badge badge-review" style="margin-left: auto;">CANDIDATE MATCH — SECONDARY REVIEW</span>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #cbd5e1;">
             <div><span style="color: #94a3b8;">Candidate Name:</span> <strong>${multipleIdentity.candidateRecord?.name || '—'}</strong></div>

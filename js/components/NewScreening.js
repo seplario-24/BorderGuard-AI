@@ -6,6 +6,7 @@ import { FaceVerification } from './FaceVerification.js';
 import { DatabasePanel } from './DatabasePanel.js';
 import { CrossDocumentPanel } from './CrossDocumentPanel.js';
 import { RiskEnginePanel } from './RiskEnginePanel.js';
+import { AuditService } from '../services/auditService.js';
 
 /**
  * BorderGuard AI - Primary Screening Console Component
@@ -350,6 +351,24 @@ export const NewScreening = {
     if (scenarioSelect) {
       scenarioSelect.addEventListener('change', (e) => {
         app.loadScenario(e.target.value);
+      });
+    }
+
+    // Request Document Recapture Button (Scenario 12)
+    const qualityReqBtn = document.getElementById('btnQualityRequest');
+    if (qualityReqBtn) {
+      qualityReqBtn.addEventListener('click', () => {
+        alert('[RECAPTURE DISPATCHED] Recapture instructions dispatched to traveller display: "Please remove document cover and place flat on scanner glass." Event logged to audit ledger.');
+        if (app.state.currentScreening?.screeningId) {
+          AuditService.logEvent(
+            app.state.currentScreening.screeningId,
+            'Hardware Scanner',
+            'Recapture request triggered by officer due to insufficient optical quality (glare/blur).',
+            'RECAPTURE_REQUESTED',
+            'OFF-4819',
+            { reason: 'Optical quality insufficient' }
+          );
+        }
       });
     }
 
