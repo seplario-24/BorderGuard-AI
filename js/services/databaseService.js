@@ -66,6 +66,46 @@ export const DatabaseService = {
       expiryDate: '2024-02-11',
       flagged: false,
       notes: 'Expired passport; renewal application pending in central registry.'
+    },
+    'N4419273': {
+      docNumber: 'N4419273',
+      holderName: 'PRIYA NAIR',
+      status: 'VALID',
+      issuingCountry: 'IND',
+      issueDate: '2022-03-18',
+      expiryDate: '2032-03-17',
+      flagged: false,
+      notes: 'Standard biometric passport issued at Passport Office Mumbai.'
+    },
+    'M7741390': {
+      docNumber: 'M7741390',
+      holderName: 'CAROLINA REYES',
+      status: 'VALID',
+      issuingCountry: 'MEX',
+      issueDate: '2019-04-15',
+      expiryDate: '2029-04-14',
+      flagged: true,
+      notes: 'Document reported lost by holder on 2025-07-14. Contact issuing authority before processing.'
+    },
+    'P7654321': {
+      docNumber: 'P7654321',
+      holderName: 'JONATHAN DOE',
+      status: 'VALID',
+      issuingCountry: 'IND',
+      issueDate: '2021-11-20',
+      expiryDate: '2031-11-19',
+      flagged: false,
+      notes: 'Standard biometric passport issued at Passport Office Bangalore. Note: Potential name link to existing record X7429136 (JOHN DOE) — see MII-2026-00341.'
+    },
+    'W7789012': {
+      docNumber: 'W7789012',
+      holderName: 'TARIQ RASHID',
+      status: 'VALID',
+      issuingCountry: 'SYR',
+      issueDate: '2021-01-10',
+      expiryDate: '2027-01-09',
+      flagged: false,
+      notes: 'Valid Syrian passport. Watchlist check required separately.'
     }
   },
 
@@ -103,6 +143,19 @@ export const DatabaseService = {
     }
   },
 
+  // Lost / Stolen Document Registry (Simulated)
+  MOCK_LOST_STOLEN_REGISTRY: [
+    {
+      docNumber: 'M7741390',
+      referenceId: 'LST-2025-M7741390',
+      holderName: 'CAROLINA REYES',
+      reportedDate: '2025-07-14',
+      reportingAuthority: 'DEMO — Secretaría de Relaciones Exteriores / Mexican Consulate',
+      status: 'REPORTED LOST — SIMULATED RECORD',
+      instructions: 'Document reported lost by holder. Secondary inspection and issuing authority verification required.'
+    }
+  ],
+
   // Mock Watchlist & Revocation Registry
   MOCK_WATCHLIST: [
     {
@@ -110,20 +163,20 @@ export const DatabaseService = {
       targetName: 'TARIQ RASHID',
       passportReference: 'W7789012',
       nationality: 'SYR',
-      alertType: 'INTERPOL PURPLE NOTICE (Document Fraud / Impersonation Alert)',
+      alertType: 'SIMULATED INTERPOL PURPLE NOTICE (Document Fraud / Misuse Alert)',
       severity: 'CRITICAL',
-      status: 'ACTIVE - REQUIRES IMMEDIATE SUPERVISOR & OFFICER REVIEW',
-      instructions: 'Do not alert passenger. Refer calmly to Secondary Inspection Lane B for supervisor debrief.'
+      status: 'ACTIVE — REQUIRES SUPERVISOR REVIEW',
+      instructions: 'Refer calmly to Secondary Inspection Lane B for supervisor debrief. Do not alert traveller to reason.'
     },
     {
       referenceId: 'DEMO-WL-00109',
       targetName: 'VIKTOR SOKOLOV',
       passportReference: 'K3342190',
       nationality: 'UKR',
-      alertType: 'BORDER BAN - FINANCIAL INTELLIGENCE UNIT WATCH',
+      alertType: 'BORDER ALERT — FINANCIAL INTELLIGENCE UNIT WATCH',
       severity: 'HIGH',
-      status: 'ACTIVE - REFER TO SECONDARY INSPECTION',
-      instructions: 'Verify customs declaration and financial instrument limits.'
+      status: 'ACTIVE — REFER FOR SECONDARY INSPECTION',
+      instructions: 'Verify customs declaration and financial instrument declarations.'
     }
   ],
 
@@ -192,6 +245,28 @@ export const DatabaseService = {
     };
   },
 
+  // Check Lost / Stolen Registry
+  checkLostStolenRegistry(docNumber) {
+    const cleanNum = (docNumber || '').toUpperCase().trim();
+    const hit = this.MOCK_LOST_STOLEN_REGISTRY.find(r => r.docNumber === cleanNum);
+
+    if (hit) {
+      return {
+        hasRecord: true,
+        record: hit,
+        severity: 'CRITICAL',
+        status: 'REPORTED LOST/STOLEN',
+        details: `SIMULATED RECORD [${hit.referenceId}]: ${hit.status}. Reported: ${hit.reportedDate}. ${hit.instructions}`
+      };
+    }
+    return {
+      hasRecord: false,
+      severity: 'OK',
+      status: 'NO_RECORD',
+      details: 'No record found in simulated lost/stolen document registry.'
+    };
+  },
+
   // Check Watchlist & Revocation ledger
   checkWatchlist(name = '', docNumber = '', nationality = '') {
     const cleanName = (name || '').toUpperCase().trim();
@@ -222,8 +297,8 @@ export const DatabaseService = {
       status: 'NO_MATCH',
       isOfflineCache: this.isOfflineMode,
       details: this.isOfflineMode
-        ? 'No match in Local Edge Watchlist Cache (Snapshot: 2h ago). Central Interpol live sync offline.'
-        : 'No match identified across simulated Interpol, Border Alert, or Revocation ledgers.'
+        ? 'No match in Local Edge Watchlist Cache (Snapshot: 2h ago). Central live sync offline.'
+        : 'No match identified across simulated alert or revocation ledgers.'
     };
   }
 };

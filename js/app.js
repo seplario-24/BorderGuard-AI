@@ -22,13 +22,16 @@ import { EvidenceModal } from './components/EvidenceModal.js';
 
 /**
  * BorderGuard AI - Master Application Coordinator & State Store
+ * DEMONSTRATION SYSTEM — Not connected to live government databases.
+ * AI-generated results are decision-support indicators. 
+ * Final immigration decisions remain with authorized officers.
  */
 export class BorderGuardApp {
   constructor() {
     this.state = {
-      isAuthenticated: true, // Default true for seamless evaluation, supports logout
-      isOffline: false,      // Air-Gapped Offline Checkpoint Node Mode
-      pendingSyncCount: 0,   // Local Section 65B offline vault queue
+      isAuthenticated: true, // Default true for seamless evaluation
+      isOffline: false,
+      pendingSyncCount: 0,
       currentView: 'dashboard',
       searchQuery: '',
       isAnalyzing: false,
@@ -40,6 +43,8 @@ export class BorderGuardApp {
       currentDBResults: null,
       currentConsistency: null,
       currentVisaValidation: null,
+      currentImageQuality: null,
+      currentEpassport: null,
       stats: {
         activeScreenings: 1,
         screeningsToday: 1248,
@@ -82,9 +87,9 @@ export class BorderGuardApp {
         {
           alertId: 'ALT-9818',
           severity: 'CRITICAL',
-          type: 'BIOMETRIC IMPERSONATION',
+          type: 'BIOMETRIC VERIFICATION EXCEPTION',
           screeningId: 'BG-2026-001242',
-          reason: 'Facial similarity 38.4% is significantly below 80% threshold. Suspected impostor.',
+          reason: 'Facial similarity 38.4% is below the 80% verification threshold. Officer review required.',
           timestamp: '2026-09-11 00:48:19 UTC',
           status: 'NEW'
         },
@@ -135,8 +140,8 @@ export class BorderGuardApp {
           documentType: 'Passport (TD3)',
           country: 'IND',
           riskScore: 88,
-          actionTaken: 'INVESTIGATION',
-          tags: ['FACE_MISMATCH']
+          actionTaken: 'REFERRED',
+          tags: ['FACE_REVIEW']
         },
         {
           screeningId: 'BG-2026-001235',
@@ -180,19 +185,86 @@ export class BorderGuardApp {
     this.render();
   }
 
-  // Load a demo scenario and calculate all services
+  // Deterministic screening ID from scenario (no Math.random)
+  getScreeningIdForScenario(scenarioId) {
+    const idMap = {
+      'scenario_1': 'BG-2026-100001',
+      'scenario_2': 'BG-2026-100002',
+      'scenario_3': 'BG-2026-100003',
+      'scenario_4': 'BG-2026-100004',
+      'scenario_5': 'BG-2026-100005',
+      'scenario_6': 'BG-2026-100006',
+      'scenario_7': 'BG-2026-100007',
+      'scenario_8': 'BG-2026-100008',
+      'scenario_9': 'BG-2026-100009',
+      'scenario_10': 'BG-2026-100010',
+      'scenario_11': 'BG-2026-100011',
+      'scenario_12': 'BG-2026-100012',
+    };
+    return idMap[scenarioId] || `BG-2026-${scenarioId.replace('scenario_', '').padStart(6, '0')}`;
+  }
+
+  // Simulate ePassport verification result per scenario
+  getEpassportForScenario(found, scenarioId) {
+    const badScenarios = ['scenario_2', 'scenario_3'];
+    const unavailableScenarios = ['scenario_12'];
+    if (unavailableScenarios.includes(scenarioId)) {
+      return { status: 'UNAVAILABLE', chipDetected: false, signatureValid: false, message: 'Unable to read chip — document quality insufficient.' };
+    }
+    if (badScenarios.includes(scenarioId)) {
+      return { status: 'INVALID', chipDetected: true, signatureValid: false, chipMrzMatch: false, message: 'Chip data does not match visual MRZ. Possible document fraud indicator.' };
+    }
+    return {
+      status: 'VALID',
+      chipDetected: true,
+      signatureValid: true,
+      chipMrzMatch: true,
+      message: 'Chip digital signature verified. Chip data matches MRZ payload.',
+      note: 'SIMULATED ePASSPORT VERIFICATION — Demonstration model only.'
+    };
+  }
+
+  // Simulate image quality result per scenario
+  getImageQualityForScenario(found, scenarioId) {
+    if (scenarioId === 'scenario_12') {
+      return found.imageQuality || {
+        resolution: { passed: false, value: '480×320 px (72 DPI)', message: 'Insufficient — minimum 600 DPI required' },
+        blur: { passed: false, score: 28, message: 'High blur detected' },
+        glare: { passed: false, score: 71, message: 'Significant glare detected' },
+        contrast: { passed: false, score: 34, message: 'Low contrast' },
+        boundary: { passed: false, message: 'Document boundary not fully detected' },
+        overallQuality: 'INSUFFICIENT',
+        action: 'RECAPTURE REQUIRED'
+      };
+    }
+    return {
+      resolution: { passed: true, value: '1920×1280 px (300 DPI)', message: 'Sufficient for analysis' },
+      blur: { passed: true, score: 96, message: 'Sharp image — Laplacian variance 96' },
+      glare: { passed: true, score: 4, message: 'Minimal glare detected' },
+      contrast: { passed: true, score: 88, message: 'Good contrast range' },
+      boundary: { passed: true, message: 'Document boundary fully detected' },
+      overallQuality: 'SUFFICIENT',
+      action: 'PROCEED TO ANALYSIS'
+    };
+  }
+
+  // Load a demo scenario and calculate all services (deterministic)
   loadScenario(scenarioId, shouldRender = true) {
     const found = DemoScenarios.find(s => s.id === scenarioId) || DemoScenarios[1];
     this.state.currentScenario = found;
 
     if (found.isOfflineScenario) {
       this.state.isOffline = true;
+    } else {
+      // Don't persist offline mode across non-offline scenarios
+      // unless user explicitly toggled it
     }
     AuditService.setOfflineMode(this.state.isOffline);
     DatabaseService.setOfflineMode(this.state.isOffline);
     this.state.pendingSyncCount = AuditService.getPendingSyncCount();
 
-    const screeningId = 'BG-2026-' + Math.floor(100000 + Math.random() * 900000).toString().substring(0, 6);
+    // DETERMINISTIC screening ID — no randomness
+    const screeningId = this.getScreeningIdForScenario(found.id);
     this.state.currentScreening = {
       screeningId,
       timestamp: new Date().toISOString(),
@@ -201,25 +273,33 @@ export class BorderGuardApp {
       isOffline: this.state.isOffline
     };
 
-    // 1. Calculate MRZ Checksums
-    const mrzResult = MRZService.parseTD3(found.document.mrzLine1, found.document.mrzLine2);
+    // 1. Image Quality Assessment
+    this.state.currentImageQuality = this.getImageQualityForScenario(found, found.id);
+
+    // 2. Calculate MRZ Checksums
+    const mrzResult = (found.document.mrzLine1 && found.document.mrzLine2)
+      ? MRZService.parseTD3(found.document.mrzLine1, found.document.mrzLine2)
+      : { success: false, error: 'MRZ not available — image quality insufficient' };
     this.state.currentMRZResult = mrzResult;
 
-    // 2. Cross-field Consistency (OCR vs MRZ)
-    const consistency = ValidationService.crossCheckOCRvsMRZ(found.ocrData, mrzResult);
+    // 3. Cross-field Consistency (OCR vs MRZ)
+    let consistency = { items: [], consistencyScore: 100, allPassed: true };
+    if (mrzResult.success) {
+      consistency = ValidationService.crossCheckOCRvsMRZ(found.ocrData, mrzResult);
+    }
     this.state.currentConsistency = consistency;
 
-    // 3. Date Validations
+    // 4. Date Validations
     const dateChecks = ValidationService.validateDates(found.ocrData);
 
-    // 4. Visa Validation
+    // 5. Visa Validation
     let visaValidation = { checks: [], status: 'N/A', allPassed: true };
     if (found.visaData) {
       visaValidation = ValidationService.validateVisa(found.visaData, found.ocrData);
     }
     this.state.currentVisaValidation = visaValidation;
 
-    // 5. Database & Watchlist Query
+    // 6. Database & Watchlist Query
     const passportDb = DatabaseService.checkPassportRegistry(found.document.docNumber);
     let visaDb = { found: false, status: 'NO_VISA' };
     if (found.visaData) {
@@ -230,6 +310,10 @@ export class BorderGuardApp {
       found.document.docNumber,
       found.traveller.nationality
     );
+
+    // Lost/Stolen check
+    const lostStolenCheck = DatabaseService.checkLostStolenRegistry(found.document.docNumber);
+
     this.state.currentDBResults = {
       passport: passportDb,
       visa: visaDb,
@@ -242,10 +326,21 @@ export class BorderGuardApp {
           status: found.watchlistHit.status,
           instructions: 'Refer calmly to Secondary Inspection Lane B for supervisor debrief.'
         }
-      } : watchlist
+      } : watchlist,
+      lostStolen: found.lostStolenHit ? {
+        hasRecord: true,
+        record: found.lostStolenHit,
+        severity: 'CRITICAL',
+        status: 'REPORTED LOST/STOLEN',
+        details: `SIMULATED RECORD [${found.lostStolenHit.referenceId}]: ${found.lostStolenHit.status}. Reported: ${found.lostStolenHit.reportedDate}.`
+      } : lostStolenCheck,
+      multipleIdentity: found.multipleIdentityHit || null
     };
 
-    // 6. Risk Engine Calculation
+    // 7. ePassport simulation
+    this.state.currentEpassport = this.getEpassportForScenario(found, found.id);
+
+    // 8. Risk Engine Calculation
     const evidenceBundle = {
       documentAuth: { passed: found.tampering?.overallScore >= 70 },
       tampering: found.tampering,
@@ -285,20 +380,22 @@ export class BorderGuardApp {
 
     const screeningId = this.state.currentScreening.screeningId;
 
-    for (let step = 1; step <= 8; step++) {
-      await new Promise(r => setTimeout(r, 280));
-      this.state.analysisStep = step;
+    const stepNames = [
+      'Document Capture & Image Quality Assessment',
+      'Document Detection & Type Classification',
+      'Neural OCR Field Extraction',
+      'ICAO MRZ Checksum Validation',
+      'Forensic ELA & Tamper Analysis',
+      'ePASSPORT Chip Verification',
+      'Biometric Face Verification',
+      'Authorized Registry & Watchlist Query',
+      'Identity Consistency Analysis',
+      'Explainable Risk Synthesis'
+    ];
 
-      const stepNames = [
-        'Document Capture & Normalization',
-        'Document Type Classification',
-        'Neural OCR Extraction',
-        'ICAO MRZ Checksum Parsing',
-        'Spectral ELA Tampering Forensics',
-        'Biometric Face Verification',
-        'Simulated Registry & Watchlist Query',
-        'Explainable Risk Synthesis'
-      ];
+    for (let step = 1; step <= stepNames.length; step++) {
+      await new Promise(r => setTimeout(r, 250));
+      this.state.analysisStep = step;
 
       await AuditService.logEvent(
         screeningId,
@@ -348,7 +445,6 @@ export class BorderGuardApp {
   // Update Settings
   updateSettings(newSettings) {
     this.state.settings = { ...this.state.settings, ...newSettings };
-    // Recalculate current scenario with new weights
     if (this.state.currentScenario) {
       this.loadScenario(this.state.currentScenario.id, true);
     }
@@ -383,7 +479,7 @@ export class BorderGuardApp {
   async executeOfficerAction({ action, reason, note }) {
     const screeningId = this.state.currentScreening.screeningId;
 
-    // Log to immutable Section 65B Audit
+    // Log to immutable audit
     await AuditService.logEvent(
       screeningId,
       'Officer Adjudication',
@@ -419,7 +515,7 @@ export class BorderGuardApp {
       this.state.stats.highRisk++;
     }
 
-    alert(`Officer Disposition [${action}] recorded successfully into Section 65B audit ledger.`);
+    alert(`Officer disposition [${action}] recorded. Entry logged to audit trail.`);
     this.navigate('screening_history');
   }
 
@@ -437,7 +533,11 @@ export class BorderGuardApp {
       ocr: this.state.currentScenario.ocrData,
       tampering: this.state.currentScenario.tampering,
       face: this.state.currentScenario.faceVerification,
-      database: this.state.currentDBResults
+      database: this.state.currentDBResults,
+      consistency: this.state.currentConsistency,
+      imageQuality: this.state.currentImageQuality,
+      epassport: this.state.currentEpassport,
+      scenario: this.state.currentScenario
     });
 
     EvidenceModal.initEvents();

@@ -40,8 +40,12 @@ export const Header = {
             <option value="scenario_4" ${activeScenario === 'scenario_4' ? 'selected' : ''}>4: Expired Passport (Review 58)</option>
             <option value="scenario_5" ${activeScenario === 'scenario_5' ? 'selected' : ''}>5: Visa Inconsistency (High Risk 72)</option>
             <option value="scenario_6" ${activeScenario === 'scenario_6' ? 'selected' : ''}>6: Impersonator (High Risk 88)</option>
-            <option value="scenario_7" ${activeScenario === 'scenario_7' ? 'selected' : ''}>7: Watchlist Match (Review 79)</option>
-            <option value="scenario_8" ${activeScenario === 'scenario_8' ? 'selected' : ''}>8: Air-Gapped Offline Node (Low 15) 📴</option>
+            <option value="scenario_7" ${activeScenario === 'scenario_7' ? 'selected' : ''}>7: Watchlist Match (High Risk 79)</option>
+            <option value="scenario_8" ${activeScenario === 'scenario_8' ? 'selected' : ''}>8: Air-Gapped Offline (Low Risk 15)</option>
+            <option value="scenario_9" ${activeScenario === 'scenario_9' ? 'selected' : ''}>9: MRZ/Visual DOB Mismatch (Review 62)</option>
+            <option value="scenario_10" ${activeScenario === 'scenario_10' ? 'selected' : ''}>10: Lost/Stolen Document (High 78)</option>
+            <option value="scenario_11" ${activeScenario === 'scenario_11' ? 'selected' : ''}>11: Multiple Identity Link (Review 55)</option>
+            <option value="scenario_12" ${activeScenario === 'scenario_12' ? 'selected' : ''}>12: Poor Image Quality (Review 45)</option>
           </select>
         </div>
 
@@ -119,7 +123,11 @@ export const Header = {
     const el = document.getElementById('headerClock');
     if (el) {
       const now = new Date();
-      el.textContent = now.toTimeString().split(' ')[0] + ' UTC';
+      // Correct UTC time display
+      const hh = String(now.getUTCHours()).padStart(2, '0');
+      const mm = String(now.getUTCMinutes()).padStart(2, '0');
+      const ss = String(now.getUTCSeconds()).padStart(2, '0');
+      el.textContent = `${hh}:${mm}:${ss} UTC`;
     }
   }
 };

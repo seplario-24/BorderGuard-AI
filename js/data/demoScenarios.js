@@ -760,5 +760,392 @@ export const DemoScenarios = [
     },
     scenarioRiskOverride: 15,
     expectedOutcome: 'LOW RISK (15/100) — Local Edge Clearance (Queued for WAN Sync)'
+  },
+
+  // -------------------------------------------------------------
+  // Scenario 9: MRZ / Visual DOB Mismatch
+  // -------------------------------------------------------------
+  {
+    id: 'scenario_9',
+    title: 'Scenario 9 — MRZ / Visual DOB Mismatch',
+    tag: 'DATA INCONSISTENCY',
+    badgeClass: 'badge-review',
+    shortDesc: 'Visual DOB shows 12 May 1995 but MRZ encodes 12 May 1985. Ten-year discrepancy detected by cross-field consistency engine.',
+    traveller: {
+      referenceId: 'TRV-2026-03387',
+      name: 'PRIYA NAIR',
+      surname: 'NAIR',
+      givenNames: 'PRIYA',
+      nationality: 'IND',
+      countryName: 'REPUBLIC OF INDIA',
+      dob: '1995-05-12', // Visual DOB
+      gender: 'F',
+      personId: 'maria_silva'
+    },
+    document: {
+      type: 'PASSPORT',
+      subType: 'Standard Biometric',
+      docNumber: 'N4419273',
+      countryCode: 'IND',
+      issueDate: '2022-03-18',
+      expiryDate: '2032-03-17',
+      issuingAuthority: 'PASSPORT OFFICE MUMBAI',
+      // MRZ encodes DOB as 1985-05-12 (85) but visual shows 1995-05-12
+      mrzLine1: 'P<INDNAIR<<PRIYA<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+      mrzLine2: 'N4419273<6IND8505129F3203178<<<<<<<<<<<<<<<<04'
+    },
+    images: {
+      docImageUri: SampleDocuments.getPassportSvg({
+        countryName: 'REPUBLIC OF INDIA',
+        countryCode: 'IND',
+        surname: 'NAIR',
+        givenNames: 'PRIYA',
+        docNumber: 'N4419273',
+        nationality: 'INDIAN',
+        sex: 'F',
+        dob: '1995-05-12', // Visual shows 1995
+        issueDate: '2022-03-18',
+        expiryDate: '2032-03-17',
+        issuingAuthority: 'PASSPORT OFFICE MUMBAI',
+        mrzLine1: 'P<INDNAIR<<PRIYA<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+        mrzLine2: 'N4419273<6IND8505129F3203178<<<<<<<<<<<<<<<<04',
+        personId: 'maria_silva'
+      }, { mrzDobMismatch: true }),
+      extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
+      travellerLiveUri: SampleDocuments.getPortraitSvg('maria_silva')
+    },
+    ocrData: {
+      fullName: 'PRIYA NAIR',
+      surname: 'NAIR',
+      givenNames: 'PRIYA',
+      documentNumber: 'N4419273',
+      nationality: 'IND',
+      dob: '1995-05-12', // Visual OCR reads 1995
+      sex: 'F',
+      issueDate: '2022-03-18',
+      expiryDate: '2032-03-17',
+      issuingAuthority: 'PASSPORT OFFICE MUMBAI',
+      overallOcrConfidence: 98.8
+    },
+    faceVerification: {
+      similarityScore: 93.2,
+      threshold: 80.0,
+      docQuality: 'ICAO Compliant (96%)',
+      liveQuality: 'Optimal (95%)'
+    },
+    liveness: {
+      status: 'PASS',
+      livenessConfidence: 94
+    },
+    tampering: {
+      overallScore: 88,
+      photoIntegrity: { score: 96, status: 'NORMAL', details: 'Portrait region authentic.' },
+      textForensics: {
+        score: 78,
+        regions: [
+          { name: 'Surname / Given Name', status: 'NORMAL', confidence: 98 },
+          { name: 'Passport Number', status: 'NORMAL', confidence: 99 },
+          { name: 'Date of Birth', status: 'SUSPICIOUS', confidence: 81, anomalyType: 'Digit character inconsistency: visual "9" in year position, MRZ encodes "8"' },
+          { name: 'Expiry Date', status: 'NORMAL', confidence: 97 }
+        ]
+      },
+      stampForensics: { score: 92, status: 'AUTHENTIC', details: 'Guilloche lines intact.' },
+      compressionForensics: { score: 86, elaDiscrepancy: 'Moderate (DOB region: 8.2%)', noiseVariance: 'Slight discontinuity at DOB field' },
+      tamperingBoundingBoxes: [
+        { x: 0.0, y: 0.47, w: 0.45, h: 0.09, severity: 'HIGH', label: 'DOB DISCREPANCY', anomaly: 'Visual "1995" vs MRZ "1985"' }
+      ]
+    },
+    mrzDobMismatch: true,
+    scenarioRiskOverride: 62,
+    expectedOutcome: 'REVIEW REQUIRED (62/100) — Visual DOB / MRZ DOB Inconsistency'
+  },
+
+  // -------------------------------------------------------------
+  // Scenario 10: Lost / Stolen Document
+  // -------------------------------------------------------------
+  {
+    id: 'scenario_10',
+    title: 'Scenario 10 — Lost / Stolen Document',
+    tag: 'LOST/STOLEN',
+    badgeClass: 'badge-high',
+    shortDesc: 'Document was reported lost in 2025. Registry confirms REPORTED LOST/STOLEN status. Biometrics pass but document is flagged.',
+    traveller: {
+      referenceId: 'TRV-2026-06724',
+      name: 'CAROLINA REYES',
+      surname: 'REYES',
+      givenNames: 'CAROLINA',
+      nationality: 'MEX',
+      countryName: 'UNITED MEXICAN STATES',
+      dob: '1990-06-28',
+      gender: 'F',
+      personId: 'maria_silva'
+    },
+    document: {
+      type: 'PASSPORT',
+      subType: 'Standard Biometric',
+      docNumber: 'M7741390',
+      countryCode: 'MEX',
+      issueDate: '2019-04-15',
+      expiryDate: '2029-04-14',
+      issuingAuthority: 'SECRETARIA DE RELACIONES EXTERIORES',
+      mrzLine1: 'P<MEXREYES<<CAROLINA<<<<<<<<<<<<<<<<<<<<<<<<',
+      mrzLine2: 'M7741390<3MEX9006284F2904146<<<<<<<<<<<<<<<<02'
+    },
+    images: {
+      docImageUri: SampleDocuments.getPassportSvg({
+        countryName: 'UNITED MEXICAN STATES',
+        countryCode: 'MEX',
+        surname: 'REYES',
+        givenNames: 'CAROLINA',
+        docNumber: 'M7741390',
+        nationality: 'MEXICAN',
+        sex: 'F',
+        dob: '1990-06-28',
+        issueDate: '2019-04-15',
+        expiryDate: '2029-04-14',
+        issuingAuthority: 'SECRETARIA DE RELACIONES EXTERIORES',
+        mrzLine1: 'P<MEXREYES<<CAROLINA<<<<<<<<<<<<<<<<<<<<<<<<',
+        mrzLine2: 'M7741390<3MEX9006284F2904146<<<<<<<<<<<<<<<<02',
+        personId: 'maria_silva'
+      }),
+      extractedFaceUri: SampleDocuments.getPortraitSvg('maria_silva'),
+      travellerLiveUri: SampleDocuments.getPortraitSvg('maria_silva')
+    },
+    ocrData: {
+      fullName: 'CAROLINA REYES',
+      surname: 'REYES',
+      givenNames: 'CAROLINA',
+      documentNumber: 'M7741390',
+      nationality: 'MEX',
+      dob: '1990-06-28',
+      sex: 'F',
+      issueDate: '2019-04-15',
+      expiryDate: '2029-04-14',
+      issuingAuthority: 'SECRETARIA DE RELACIONES EXTERIORES',
+      overallOcrConfidence: 99.0
+    },
+    faceVerification: {
+      similarityScore: 94.6,
+      threshold: 80.0,
+      docQuality: 'Good (94%)',
+      liveQuality: 'Optimal (97%)'
+    },
+    liveness: {
+      status: 'PASS',
+      livenessConfidence: 95
+    },
+    tampering: {
+      overallScore: 94,
+      photoIntegrity: { score: 96, status: 'NORMAL', details: 'Portrait region authentic. No splicing detected.' },
+      textForensics: { score: 95, regions: [{ name: 'All Fields', status: 'NORMAL', confidence: 97 }] },
+      stampForensics: { score: 92, status: 'AUTHENTIC', details: 'Embossed seals consistent.' },
+      compressionForensics: { score: 94, elaDiscrepancy: 'Low (1.8%)', noiseVariance: 'Uniform' },
+      tamperingBoundingBoxes: []
+    },
+    lostStolenHit: {
+      referenceId: 'LST-2025-M7741390',
+      reportedDate: '2025-07-14',
+      reportingAuthority: 'DEMO — Secretaría de Relaciones Exteriores / Mexican Consulate',
+      status: 'REPORTED LOST — SIMULATED RECORD',
+      instructions: 'Document reported lost by holder on 2025-07-14. Secondary inspection and document verification required.'
+    },
+    scenarioRiskOverride: 78,
+    expectedOutcome: 'HIGH RISK (78/100) — Lost / Stolen Document Alert'
+  },
+
+  // -------------------------------------------------------------
+  // Scenario 11: Multiple Identity Indicator
+  // -------------------------------------------------------------
+  {
+    id: 'scenario_11',
+    title: 'Scenario 11 — Multiple Identity Indicator',
+    tag: 'IDENTITY LINK',
+    badgeClass: 'badge-review',
+    shortDesc: 'Two distinct passport records (JOHN DOE / JONATHAN DOE) with different document numbers show high biometric similarity. Candidate match flagged for authorized investigation.',
+    traveller: {
+      referenceId: 'TRV-2026-09988',
+      name: 'JONATHAN DOE',
+      surname: 'DOE',
+      givenNames: 'JONATHAN',
+      nationality: 'IND',
+      countryName: 'REPUBLIC OF INDIA',
+      dob: '1995-08-15',
+      gender: 'M',
+      personId: 'john_doe'
+    },
+    document: {
+      type: 'PASSPORT',
+      subType: 'Standard Biometric',
+      docNumber: 'P7654321',
+      countryCode: 'IND',
+      issueDate: '2021-11-20',
+      expiryDate: '2031-11-19',
+      issuingAuthority: 'PASSPORT OFFICE BANGALORE',
+      mrzLine1: 'P<INDDOE<<JONATHAN<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+      mrzLine2: 'P7654321<9IND9508159M3111192<<<<<<<<<<<<<<<<04'
+    },
+    images: {
+      docImageUri: SampleDocuments.getPassportSvg({
+        countryName: 'REPUBLIC OF INDIA',
+        countryCode: 'IND',
+        surname: 'DOE',
+        givenNames: 'JONATHAN',
+        docNumber: 'P7654321',
+        nationality: 'INDIAN',
+        sex: 'M',
+        dob: '1995-08-15',
+        issueDate: '2021-11-20',
+        expiryDate: '2031-11-19',
+        issuingAuthority: 'PASSPORT OFFICE BANGALORE',
+        mrzLine1: 'P<INDDOE<<JONATHAN<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+        mrzLine2: 'P7654321<9IND9508159M3111192<<<<<<<<<<<<<<<<04',
+        personId: 'john_doe'
+      }),
+      extractedFaceUri: SampleDocuments.getPortraitSvg('john_doe'),
+      travellerLiveUri: SampleDocuments.getPortraitSvg('john_doe')
+    },
+    ocrData: {
+      fullName: 'JONATHAN DOE',
+      surname: 'DOE',
+      givenNames: 'JONATHAN',
+      documentNumber: 'P7654321',
+      nationality: 'IND',
+      dob: '1995-08-15',
+      sex: 'M',
+      issueDate: '2021-11-20',
+      expiryDate: '2031-11-19',
+      issuingAuthority: 'PASSPORT OFFICE BANGALORE',
+      overallOcrConfidence: 99.3
+    },
+    faceVerification: {
+      similarityScore: 96.1,
+      threshold: 80.0,
+      docQuality: 'ICAO Compliant (97%)',
+      liveQuality: 'Optimal (95%)'
+    },
+    liveness: {
+      status: 'PASS',
+      livenessConfidence: 95
+    },
+    tampering: {
+      overallScore: 95,
+      photoIntegrity: { score: 97, status: 'NORMAL', details: 'No splicing detected.' },
+      textForensics: { score: 96, regions: [{ name: 'All Fields', status: 'NORMAL', confidence: 98 }] },
+      stampForensics: { score: 93, status: 'AUTHENTIC', details: 'Seals consistent.' },
+      compressionForensics: { score: 95, elaDiscrepancy: 'Low (1.3%)', noiseVariance: 'Uniform' },
+      tamperingBoundingBoxes: []
+    },
+    multipleIdentityHit: {
+      candidateRecord: {
+        name: 'JOHN DOE',
+        docNumber: 'X7429136',
+        nationality: 'IND',
+        dob: '1995-08-15',
+        issuingAuthority: 'PASSPORT OFFICE DELHI',
+        biometricSimilarity: 'HIGH (91.4%)',
+        matchingSignals: ['DOB identical', 'Nationality consistent', 'Surname partial match (DOE)', 'Biometric high similarity']
+      },
+      referenceId: 'MII-2026-00341',
+      status: 'CANDIDATE MATCH — AUTHORIZED INVESTIGATION REQUIRED',
+      note: 'This is not a confirmation of identity fraud. This is a candidate match requiring authorized officer investigation.'
+    },
+    scenarioRiskOverride: 55,
+    expectedOutcome: 'REVIEW REQUIRED (55/100) — Potential Identity Link Detected'
+  },
+
+  // -------------------------------------------------------------
+  // Scenario 12: Poor Image Quality
+  // -------------------------------------------------------------
+  {
+    id: 'scenario_12',
+    title: 'Scenario 12 — Poor Image Quality',
+    tag: 'IMAGE QUALITY',
+    badgeClass: 'badge-review',
+    shortDesc: 'Document captured with glare, blur, and insufficient resolution. OCR confidence low. System cannot reliably extract fields. Recapture required.',
+    traveller: {
+      referenceId: 'TRV-2026-07411',
+      name: 'UNKNOWN — OCR INSUFFICIENT',
+      surname: 'UNKNOWN',
+      givenNames: 'UNKNOWN',
+      nationality: 'UNK',
+      countryName: 'UNKNOWN — RECAPTURE REQUIRED',
+      dob: 'UNREADABLE',
+      gender: 'U',
+      personId: 'john_doe'
+    },
+    document: {
+      type: 'PASSPORT',
+      subType: 'UNDETECTED — LOW QUALITY',
+      docNumber: 'UNREADABLE',
+      countryCode: 'UNK',
+      issueDate: 'UNREADABLE',
+      expiryDate: 'UNREADABLE',
+      issuingAuthority: 'UNREADABLE',
+      mrzLine1: '',
+      mrzLine2: ''
+    },
+    images: {
+      docImageUri: SampleDocuments.getPassportSvg({
+        countryName: 'UNKNOWN',
+        countryCode: '---',
+        surname: '????????',
+        givenNames: '????????',
+        docNumber: '?????????',
+        nationality: '???',
+        sex: '?',
+        dob: '????-??-??',
+        issueDate: '????-??-??',
+        expiryDate: '????-??-??',
+        issuingAuthority: '??? — POOR QUALITY',
+        mrzLine1: '?<??????????????????????????????????????????????????',
+        mrzLine2: '??????????????????????????????????????????',
+        personId: 'john_doe'
+      }, { poorQuality: true }),
+      extractedFaceUri: null,
+      travellerLiveUri: null
+    },
+    ocrData: {
+      fullName: 'NOT DETECTED',
+      surname: 'NOT DETECTED',
+      givenNames: 'NOT DETECTED',
+      documentNumber: 'NOT DETECTED',
+      nationality: 'NOT DETECTED',
+      dob: 'NOT DETECTED',
+      sex: 'NOT DETECTED',
+      issueDate: 'NOT DETECTED',
+      expiryDate: 'NOT DETECTED',
+      issuingAuthority: 'NOT DETECTED',
+      overallOcrConfidence: 18.3,
+      poorQuality: true
+    },
+    imageQuality: {
+      resolution: { passed: false, value: '480×320 px (72 DPI)', message: 'Insufficient — minimum 600 DPI required' },
+      blur: { passed: false, score: 28, message: 'High blur detected — Laplacian variance 28 (threshold: 100)' },
+      glare: { passed: false, score: 71, message: 'Significant glare detected on upper-right region' },
+      contrast: { passed: false, score: 34, message: 'Low contrast — histogram compression detected' },
+      boundary: { passed: false, message: 'Document boundary not fully detected' },
+      overallQuality: 'INSUFFICIENT',
+      action: 'RECAPTURE REQUIRED'
+    },
+    faceVerification: {
+      similarityScore: 0,
+      threshold: 80.0,
+      docQuality: 'INSUFFICIENT — Cannot Extract Face',
+      liveQuality: 'Unavailable'
+    },
+    liveness: {
+      status: 'UNAVAILABLE',
+      livenessConfidence: 0
+    },
+    tampering: {
+      overallScore: 0,
+      photoIntegrity: { score: 0, status: 'UNAVAILABLE', details: 'Insufficient image quality for analysis.' },
+      textForensics: { score: 0, regions: [] },
+      stampForensics: { score: 0, status: 'UNAVAILABLE', details: 'Cannot analyze.' },
+      compressionForensics: { score: 0, elaDiscrepancy: 'N/A', noiseVariance: 'N/A' },
+      tamperingBoundingBoxes: []
+    },
+    scenarioRiskOverride: 45,
+    expectedOutcome: 'REVIEW REQUIRED (45/100) — Image Quality Insufficient — Recapture Required'
   }
 ];

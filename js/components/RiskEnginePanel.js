@@ -203,7 +203,7 @@ export const RiskEnginePanel = {
     if (flagBtn) {
       flagBtn.addEventListener('click', () => {
         const note = document.getElementById('officerNotesField')?.value || '';
-        app.promptOfficerAction('INVESTIGATION', 'Subject flagged for formal fraud investigation and detainment.', note);
+        app.promptOfficerAction('INVESTIGATION', 'Referred to supervisor for enhanced secondary inspection. Document fraud indicators present — supervisor review required before any further processing.', note);
       });
     }
 

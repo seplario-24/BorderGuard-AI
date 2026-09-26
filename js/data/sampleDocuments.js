@@ -86,6 +86,8 @@ export const SampleDocuments = {
     const isAlteredNumber = options.alteredNumber || false;
     const isPhotoSpliced = options.photoSpliced || false;
     const isExpired = options.expired || false;
+    const isMrzDobMismatch = options.mrzDobMismatch || false;
+    const isPoorQuality = options.poorQuality || false;
 
     const displayDocNum = isAlteredNumber ? 'A1234567' : docData.docNumber;
     const numColor = isAlteredNumber ? '#991b1b' : '#0f172a'; // slightly anomalous tint if altered
@@ -193,6 +195,12 @@ export const SampleDocuments = {
 
         <text x="230" y="300" font-size="11" font-weight="600" fill="#64748b">AUTHORITY / AUTORITE</text>
         <text x="230" y="322" font-size="14" font-weight="700" fill="#0f172a">${docData.issuingAuthority || 'PASSPORT OFFICE DELHI'}</text>
+
+        ${isMrzDobMismatch ? `
+          <!-- Visual DOB highlight showing discrepancy -->
+          <rect x="-4" y="248" width="180" height="28" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="4,2"/>
+          <text x="185" y="266" font-size="9" font-weight="700" fill="#f59e0b">⚠ VISUAL: 1995</text>
+        ` : ''}
       </g>
 
       <!-- MRZ Zone (Lower Box) -->
@@ -204,7 +212,26 @@ export const SampleDocuments = {
         <text x="20" y="85" font-family="'OCR-B', 'IBM Plex Mono', monospace" font-size="24" font-weight="600" fill="#0f172a" letter-spacing="4">
           ${docData.mrzLine2 || 'X7429136<8IND9508159M3005138<<<<<<<<<<<<<<02'}
         </text>
+        ${isMrzDobMismatch ? `
+          <!-- Highlight the MRZ DOB position with amber box -->
+          <rect x="230" y="55" width="120" height="36" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,3"/>
+          <text x="355" y="78" font-size="9" font-weight="700" fill="#f59e0b">MRZ: 1985</text>
+        ` : ''}
       </g>
+
+      ${isPoorQuality ? `
+        <!-- Glare Overlay -->
+        <ellipse cx="650" cy="150" rx="280" ry="180" fill="white" opacity="0.55"/>
+        <!-- Blur hint strips -->
+        <rect width="900" height="600" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0"/>
+        <!-- Noise pattern -->
+        <filter id="blurF"><feGaussianBlur stdDeviation="2.5"/></filter>
+        <rect width="900" height="600" fill="rgba(200,200,200,0.12)" filter="url(#blurF)"/>
+        <!-- Quality Warning Banner -->
+        <rect x="0" y="220" width="900" height="70" fill="rgba(245,158,11,0.85)"/>
+        <text x="450" y="248" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="#1e293b" text-anchor="middle" letter-spacing="2">⚠ INSUFFICIENT IMAGE QUALITY</text>
+        <text x="450" y="272" font-family="'Inter', sans-serif" font-size="13" fill="#1e293b" text-anchor="middle">Glare, blur and low resolution detected — RECAPTURE REQUIRED</text>
+      ` : ''}
     </svg>
     `;
     return this.svgToDataUri(svg);

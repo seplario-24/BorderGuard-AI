@@ -9,6 +9,8 @@ export const DatabasePanel = {
     const passport = dbResults.passport || { found: true, status: 'VALID', severity: 'OK', details: 'Confirmed active in central registry.' };
     const visa = dbResults.visa || { found: true, status: 'VALID', severity: 'OK', details: 'Electronic visa valid for entry.' };
     const watchlist = dbResults.watchlist || { hasMatch: false, severity: 'OK', status: 'NO_MATCH', details: 'No active notices or flags.' };
+    const lostStolen = dbResults.lostStolen || { hasRecord: false };
+    const multipleIdentity = dbResults.multipleIdentity || null;
 
     return `
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -46,6 +48,48 @@ export const DatabasePanel = {
           <p style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">
             ${watchlist.match?.instructions || 'Refer subject to secondary examination immediately.'}
           </p>
+        </div>
+      ` : ''}
+
+      <!-- Lost/Stolen Document Alert -->
+      ${lostStolen.hasRecord ? `
+        <div style="background: rgba(239, 68, 68, 0.12); border: 2px solid rgba(239, 68, 68, 0.6); border-radius: 8px; padding: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="font-size: 20px;">🔴</span>
+            <strong style="font-size: 14px; color: #ef4444;">LOST/STOLEN DOCUMENT REGISTRY HIT — SIMULATED ALERT</strong>
+            <span class="badge badge-high" style="margin-left: auto;">CRITICAL</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #cbd5e1; margin-top: 8px;">
+            <div><span style="color: #94a3b8;">Reference:</span> <strong>${lostStolen.record?.referenceId || '—'}</strong></div>
+            <div><span style="color: #94a3b8;">Reported Date:</span> <strong>${lostStolen.record?.reportedDate || '—'}</strong></div>
+            <div style="grid-column: 1/-1;"><span style="color: #94a3b8;">Authority:</span> ${lostStolen.record?.reportingAuthority || '—'}</div>
+            <div style="grid-column: 1/-1;"><span style="color: #fca5a5; font-weight: 700;">${lostStolen.record?.instructions || ''}</span></div>
+          </div>
+          <div style="font-size: 11px; color: #94a3b8; margin-top: 8px; font-style: italic;">DEMONSTRATION ONLY — Simulated record. Not connected to real government databases.</div>
+        </div>
+      ` : ''}
+
+      <!-- Multiple Identity Candidate Match -->
+      ${multipleIdentity ? `
+        <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.5); border-radius: 8px; padding: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span style="font-size: 20px;">🟡</span>
+            <strong style="font-size: 14px; color: #f59e0b;">CANDIDATE IDENTITY LINK — REF: ${multipleIdentity.referenceId}</strong>
+            <span class="badge badge-review" style="margin-left: auto;">INVESTIGATION REQUIRED</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #cbd5e1;">
+            <div><span style="color: #94a3b8;">Candidate Name:</span> <strong>${multipleIdentity.candidateRecord?.name || '—'}</strong></div>
+            <div><span style="color: #94a3b8;">Candidate Doc:</span> <strong style="font-family: var(--font-mono); color: #38bdf8;">${multipleIdentity.candidateRecord?.docNumber || '—'}</strong></div>
+            <div><span style="color: #94a3b8;">Biometric Similarity:</span> <strong style="color: #f59e0b;">${multipleIdentity.candidateRecord?.biometricSimilarity || '—'}</strong></div>
+            <div><span style="color: #94a3b8;">Issuing Authority:</span> ${multipleIdentity.candidateRecord?.issuingAuthority || '—'}</div>
+            <div style="grid-column: 1/-1;">
+              <span style="color: #94a3b8;">Matching Signals:</span>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;">
+                ${(multipleIdentity.candidateRecord?.matchingSignals || []).map(s => `<span style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #f59e0b;">${s}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: #94a3b8; margin-top: 10px; font-style: italic;">${multipleIdentity.note || ''}</div>
         </div>
       ` : ''}
 
