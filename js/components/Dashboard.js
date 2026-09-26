@@ -145,7 +145,7 @@ export const Dashboard = {
             <span style="font-size: 16px;">🎯</span>
             <span style="font-size: 14px; font-weight: 700; color: #f8fafc;">Select Pre-Configured Test Scenario for Inspection:</span>
           </div>
-          <span style="font-size: 11px; color: #64748b; font-family: var(--font-mono);">7 DETERMINISTIC BENCHMARK CASES</span>
+          <span style="font-size: 11px; color: #64748b; font-family: var(--font-mono);">12 DETERMINISTIC BENCHMARK CASES</span>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
@@ -211,6 +211,38 @@ export const Dashboard = {
               <span class="badge badge-low">Score: 15</span>
             </div>
             <p style="font-size: 11px; color: #cbd5e1; margin-top: 4px;">WAN disconnected. Local Edge AI + Local Section 65B Vault storage.</p>
+          </div>
+
+          <div class="scenario-pill-btn" data-scenario="scenario_9" style="cursor: pointer; background: #1a1a10; border: 1px solid #f59e0b; border-radius: 6px; padding: 10px; transition: all 0.15s;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 12px; color: #fde68a;">9. MRZ / Visual DOB Mismatch</strong>
+              <span class="badge badge-review">Score: 62</span>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Visual DOB 1995 vs MRZ DOB 1985. Ten-year discrepancy detected.</p>
+          </div>
+
+          <div class="scenario-pill-btn" data-scenario="scenario_10" style="cursor: pointer; background: #1c1a29; border: 1px solid #ef4444; border-radius: 6px; padding: 10px; transition: all 0.15s;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 12px; color: #fca5a5;">10. Lost / Stolen Document</strong>
+              <span class="badge badge-high">Score: 78</span>
+            </div>
+            <p style="font-size: 11px; color: #cbd5e1; margin-top: 4px;">Passport M7741390 reported lost 2025-07-14. Biometrics pass but document flagged.</p>
+          </div>
+
+          <div class="scenario-pill-btn" data-scenario="scenario_11" style="cursor: pointer; background: #1a1a10; border: 1px solid #f59e0b; border-radius: 6px; padding: 10px; transition: all 0.15s;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 12px; color: #fde68a;">11. Multiple Identity Indicator</strong>
+              <span class="badge badge-review">Score: 55</span>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 4px;">JONATHAN DOE vs JOHN DOE: 91.4% biometric candidate match across two documents.</p>
+          </div>
+
+          <div class="scenario-pill-btn" data-scenario="scenario_12" style="cursor: pointer; background: #1a1a14; border: 1px solid #6b7280; border-radius: 6px; padding: 10px; transition: all 0.15s;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 12px; color: #d1d5db;">12. Poor Image Quality</strong>
+              <span class="badge badge-review">Score: 45</span>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 4px;">Glare, blur, insufficient DPI. OCR: 18.3%. Recapture required.</p>
           </div>
         </div>
       </div>
