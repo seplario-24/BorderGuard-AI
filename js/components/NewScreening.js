@@ -39,7 +39,7 @@ export const NewScreening = {
       { step: 7, label: 'Biometric Face & Liveness' },
       { step: 8, label: 'Registries & Watchlist Query' },
       { step: 9, label: 'Identity Consistency Analysis' },
-      { step: 10, label: 'Explainable Risk Synthesis' }
+      { step: 10, label: 'XAI Risk & Situation Synthesis' }
     ];
 
     return `
@@ -174,7 +174,7 @@ export const NewScreening = {
       <!-- Main Inspection Tabs -->
       <div style="display: flex; gap: 4px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 2px; flex-wrap: wrap;">
         <button class="filter-btn tab-btn ${this.activeTab === 'risk' ? 'active' : ''}" data-tab="risk">
-          ⚡ Risk &amp; Officer Action
+          ⚡ XAI Risk &amp; Officer Action
         </button>
         <button class="filter-btn tab-btn ${this.activeTab === 'quality' ? 'active' : ''}" data-tab="quality">
           🖼️ Image Quality

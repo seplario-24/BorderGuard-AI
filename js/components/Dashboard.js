@@ -30,7 +30,7 @@ export const Dashboard = {
           <line x1="12" y1="8" x2="12.01" y2="8"></line>
         </svg>
         <div>
-          <strong>AI DECISION-SUPPORT PROTOCOL:</strong> AI-generated signals and risk metrics are investigative indicators to support officer judgement. Final immigration clearance decisions remain with authorized border officers under national jurisdiction.
+          <strong>XAI DECISION-SUPPORT PROTOCOL:</strong> XAI-generated document situation explanations and risk metrics are investigative indicators to support officer judgement. Final immigration clearance decisions remain with authorized border officers under national jurisdiction.
         </div>
       </div>
 

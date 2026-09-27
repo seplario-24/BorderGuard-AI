@@ -41,9 +41,9 @@ export const EvidenceModal = {
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 20px;">🔎</span>
             <div>
-              <h3 class="modal-title">Explainable Evidence Dossier: ${screeningId}</h3>
+              <h3 class="modal-title">XAI Explainable Evidence Dossier: ${screeningId}</h3>
               <div style="font-size: 11px; color: #94a3b8;">
-                AI Multi-Signal Forensic Breakdown • Subject: <strong style="color: #f8fafc;">${traveller.name || 'TRAVELLER'}</strong> (${traveller.nationality || 'IND'})
+                XAI Multi-Signal Forensic &amp; Situation Explanation • Subject: <strong style="color: #f8fafc;">${traveller.name || 'TRAVELLER'}</strong> (${traveller.nationality || 'IND'})
               </div>
             </div>
           </div>
@@ -54,7 +54,10 @@ export const EvidenceModal = {
           <!-- Evidence Summary Banner -->
           <div style="background: var(--bg-subtle); border-left: 4px solid ${risk.color || '#38bdf8'}; border-radius: 6px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Overall Risk Assessment</div>
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                <span>🤖</span>
+                <span>XAI Document Situation &amp; Overall Risk Assessment</span>
+              </div>
               <div style="font-size: 20px; font-weight: 800; color: #f8fafc; font-family: var(--font-mono);">
                 ${risk.score} / 100 — <span style="color: ${risk.color || '#10b981'};">${risk.level}</span>
               </div>
@@ -63,7 +66,7 @@ export const EvidenceModal = {
               </div>
             </div>
             <div style="text-align: right;">
-              <span class="badge badge-info" style="font-size: 12px; padding: 4px 10px;">AI CONFIDENCE: ${risk.aiConfidence || 94.6}%</span>
+              <span class="badge badge-info" style="font-size: 12px; padding: 4px 10px;">XAI CONFIDENCE: ${risk.aiConfidence || 94.6}%</span>
               <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Inspection Lane: 04 • Officer: OFF-4819</div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 /**
  * BorderGuard AI - Explainable Risk Score & Officer Action Panel
  * Renders circular SVG risk gauge, horizontal contribution breakdown,
- * AI Screening Recommendation, and officer decision action triggers.
+ * XAI Document Situation Assessment, and officer decision action triggers.
  */
 
 export const RiskEnginePanel = {
@@ -43,14 +43,14 @@ export const RiskEnginePanel = {
           </div>
 
           <div style="margin-top: 14px; font-size: 12px; color: #94a3b8;">
-            AI System Confidence: <strong style="color: #f8fafc;">${confidence}%</strong>
+            XAI System Confidence: <strong style="color: #f8fafc;">${confidence}%</strong>
           </div>
           <div style="font-size: 10px; color: #64748b; margin-top: 2px;">
             Multi-Signal Weighted Evaluation
           </div>
         </div>
 
-        <!-- Traveller & AI Screening Recommendation Card -->
+        <!-- Traveller & XAI Screening Recommendation Card -->
         <div style="background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -66,14 +66,20 @@ export const RiskEnginePanel = {
               </span>
             </div>
 
-            <!-- Recommendation Box -->
+            <!-- XAI Document Situation Explanation Box -->
             <div style="margin-top: 18px; background: var(--bg-subtle); border-left: 4px solid ${color}; border-radius: 4px; padding: 14px;">
-              <div style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700;">AI Screening Recommendation</div>
-              <div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 11px; text-transform: uppercase; color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                  <span>🤖</span>
+                  <span>XAI Document Situation Assessment</span>
+                </div>
+                <span class="badge badge-info" style="font-size: 9px; padding: 2px 7px;">XAI EXPLANATION</span>
+              </div>
+              <div style="font-size: 15px; font-weight: 700; color: #f8fafc; margin-top: 6px;">
                 ${recommendation}
               </div>
-              <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
-                *Decision-support protocol: AI does not make legal clearance determinations. Authorized officer must execute formal action.
+              <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">
+                *Decision-support protocol: XAI does not make legal clearance determinations. Authorized officer must execute formal action.
               </div>
             </div>
           </div>
@@ -85,7 +91,7 @@ export const RiskEnginePanel = {
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
               </svg>
-              <span>View Full Evidence</span>
+              <span>View XAI Evidence Dossier</span>
             </button>
             <button id="btnOpenAudit" class="btn btn-secondary">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -98,12 +104,12 @@ export const RiskEnginePanel = {
         </div>
       </div>
 
-      <!-- Explainable Risk Factors Contribution Chart -->
+      <!-- XAI Explainable Risk Factors Contribution Chart -->
       <div style="background-color: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <div>
-            <h3 style="font-size: 14px; font-weight: 700; color: #f8fafc;">Explainable Risk Factor Contribution Breakdown</h3>
-            <p style="font-size: 12px; color: #94a3b8;">Transparent mathematical explanation of positive penalties and verified mitigating factors</p>
+            <h3 style="font-size: 14px; font-weight: 700; color: #f8fafc;">XAI Explainable Risk Factor &amp; Situation Breakdown</h3>
+            <p style="font-size: 12px; color: #94a3b8;">XAI transparent mathematical explanation of positive penalties and verified mitigating factors</p>
           </div>
           <div style="font-family: var(--font-mono); font-size: 12px; color: #94a3b8;">
             Baseline: 0 pts • Score: <strong style="color: ${color};">${score} / 100</strong>

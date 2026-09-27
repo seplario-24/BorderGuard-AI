@@ -98,11 +98,11 @@ export const ArchitectureView = {
       status: 'ONLINE (DEMO)'
     },
     risk: {
-      title: '11. Explainable Multi-Factor Risk Engine',
-      purpose: 'Synthesizes all multi-tier forensic, biometric, checksum, and registry signals into a transparent 0–100 risk score with plain-English rationales.',
+      title: '11. XAI Document Situation & Multi-Factor Risk Engine',
+      purpose: 'Synthesizes all multi-tier forensic, biometric, checksum, and registry signals into an explainable XAI 0–100 risk score with transparent situation rationales.',
       input: 'All upstream module outputs and anomaly weights.',
-      output: 'Overall Risk Score (Low / Review / High) + Officer Screening Recommendation.',
-      algorithm: 'Configurable Multi-Factor Weighted Risk Model',
+      output: 'Overall Risk Score (Low / Review / High) + XAI Screening Recommendation.',
+      algorithm: 'XAI Multi-Factor Explainable Weighted Risk Model',
       confidence: '94.6%',
       status: 'ONLINE'
     },
@@ -131,7 +131,7 @@ export const ArchitectureView = {
       { id: 'face', name: 'Biometric Face Match', icon: '👤' },
       { id: 'liveness', name: 'Liveness Anti-Spoofing', icon: '👁️' },
       { id: 'registry', name: 'Database & Watchlist', icon: '🏛️' },
-      { id: 'risk', name: 'Explainable Risk Engine', icon: '⚡' },
+      { id: 'risk', name: 'XAI Risk & Situation Engine', icon: '⚡' },
       { id: 'adjudication', name: 'Officer Action & Audit', icon: '⚖️' }
     ];
 
@@ -141,7 +141,7 @@ export const ArchitectureView = {
       <div>
         <h1 style="font-size: 20px; font-weight: 800; color: #f8fafc;">System Architecture &amp; Verification Pipeline</h1>
         <p style="font-size: 12px; color: #94a3b8;">
-          Interactive 12-stage multi-signal document inspection, biometric verification, and explainable risk pipeline
+          Interactive 12-stage multi-signal document inspection, biometric verification, and XAI explainable risk pipeline
         </p>
       </div>
 

@@ -12,7 +12,7 @@ export const SystemStatus = {
       { name: 'Tampering & ELA Forensics', version: 'v4.2-spectral-ela', status: 'ONLINE', latency: '850 ms', mode: 'CANVAS ACCEL', uptime: '99.91%' },
       { name: 'Biometric Face Verification', version: 'v5.0-facenet-emb', status: 'ONLINE', latency: '210 ms', mode: 'COSINE 512D', uptime: '99.97%' },
       { name: 'Anti-Spoofing Liveness Service', version: 'v2.1-depth-pad', status: 'ONLINE', latency: '160 ms', mode: 'SIMULATED TELEMETRY', uptime: '99.99%' },
-      { name: 'Explainable AI Risk Engine', version: 'v3.0-weighted-rule', status: 'ONLINE', latency: '60 ms', mode: 'REALTIME ENGINE', uptime: '100.0%' },
+      { name: 'XAI Document Situation & Risk Engine', version: 'v3.0-weighted-rule', status: 'ONLINE', latency: '60 ms', mode: 'REALTIME ENGINE', uptime: '100.0%' },
       { name: 'Simulated Central Registries', version: 'v1.1-mock-gateway', status: 'ONLINE', latency: '140 ms', mode: 'DEMO LEDGER', uptime: '100.0%' },
       { name: 'Section 65B Audit Service', version: 'v2.0-sha256-chain', status: 'ONLINE', latency: '35 ms', mode: 'IMMUTABLE STORE', uptime: '100.0%' }
     ];

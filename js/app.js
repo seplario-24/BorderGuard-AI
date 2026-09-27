@@ -401,7 +401,7 @@ export class BorderGuardApp {
       'Biometric Face Verification',
       'Authorized Registry & Watchlist Query',
       'Identity Consistency Analysis',
-      'Explainable Risk Synthesis'
+      'XAI Risk & Situation Synthesis'
     ];
 
     for (let step = 1; step <= stepNames.length; step++) {
