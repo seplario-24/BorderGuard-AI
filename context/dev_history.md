@@ -89,53 +89,90 @@ When asked to **update context**, append a new dated entry at the bottom describ
 ### Branch: `main`
 ### Latest Commit: `c73a894`
 
+---
+
+### 2026-09-27 — Session 2: SIH Prototype Transformation, Technical QA Audit & XAI Rebranding
+
+---
+
+#### [FEATURE] SIH Upgrade: 4 New Border Verification Scenarios
+- **Commit:** `2c30524` — *"SIH upgrade: add 4 new scenarios, fix UTC clock, fix officer language, add ePassport/quality tabs, lost/stolen/multiple-identity support, deterministic IDs"*
+- **Files Modified:** `js/data/demoScenarios.js`, `js/data/sampleDocuments.js`, `js/services/databaseService.js`, `js/services/riskService.js`, `js/components/NewScreening.js`, `js/components/DatabasePanel.js`, `js/components/Header.js`, `js/app.js`
+- **What Changed:**
+  - Expanded demo scenarios from 8 to 12 realistic border control cases:
+    - **Scenario 9:** MRZ vs Visual DOB Mismatch (`P8921451`, Rahul Sharma)
+    - **Scenario 10:** Document Reported Lost/Stolen in Interpol/SLTD database (`N5521908`, David Miller)
+    - **Scenario 11:** Multiple Identity / Aliasing Candidate Link (`S8921450`, Amita Sharma linked to candidate Sunita Devi)
+    - **Scenario 12:** Poor Optical Image Quality / Glare & Blur Recapture Gate (`R3310928`, Carlos Hernandez)
+  - Added live dynamic UTC clock in Header with checkpoint metadata (`DEL-T3-INTL-LANE-04`).
+  - Added dedicated tabs in `NewScreening.js`: `🖼️ Image Quality` and `📡 ePASSPORT Chip`.
+  - Replaced unconvincing language (`Reject Entry`) with authentic border terminology (`Referral to Secondary Inspection Lane B`).
+  - Implemented deterministic screening IDs (`BG-2026-001248`, `TRV-2026-08192`) instead of random UUIDs.
+
+---
+
+#### [UI] Dashboard 12-Scenario Grid Upgrade
+- **Commit:** `1651b3b` — *"Add 12 scenario cards on dashboard, improve layout and counts"*
+- **Files Modified:** `js/components/Dashboard.js`
+- **What Changed:**
+  - Replaced hardcoded scenario list on the dashboard with a dynamic 12-scenario card grid.
+  - Added visual risk status badges (Low, Review, High Risk) and direct one-click launcher buttons to immediately test any scenario in the inspection workstation.
+
+---
+
+#### [AUDIT & FIX] Comprehensive QA Audit, ICAO Modulo-10 Checksums & 7-Section Evidence Dossier
+- **Commit:** `3662468` — *"Comprehensive QA audit fixes: ICAO 9303 checksums, Amita Sharma passport collision fix, 7-section Evidence Dossier, border protocol terminology, deterministic history linking"*
+- **Files Modified:** `js/data/demoScenarios.js`, `js/services/databaseService.js`, `js/components/EvidenceModal.js`, `js/components/AuditTrailView.js`, `js/components/OfficerActionModal.js`, `js/app.js`
+- **What Changed:**
+  - **ICAO 9303 Checksum Accuracy:** Fixed modulo-10 check digits so genuine documents pass, and altered documents fail mathematically.
+  - **Passport Number Collision Fixed:** Amita Sharma in Scenario 11 was sharing passport number `P8921450` with Scenario 1 (John Doe); resolved by assigning independent Indian passport series `S8921450` and updating all cross-references across `databaseService.js`, `demoScenarios.js`, and `sampleDocuments.js`.
+  - **7-Section Evidence Dossier Modal:** Completely rebuilt `EvidenceModal.js` into an exhaustive multi-signal audit dossier:
+    1. Forensic Image & Tampering Findings (ELA, Photo integrity, Stamps)
+    2. OCR vs MRZ Cross-Check (Visual doc number, MRZ doc number, Modulo 10 check, DOB, Expiry, Composite check)
+    3. Biometric Verification & Anti-Spoofing (Facial cosine similarity, 2D screen presentation attack detection, ICAO portrait quality)
+    4. ePassport / ICAO 9303 Chip Cryptography (NFC chip detection, DS certificate signature, chip vs MRZ cross-check)
+    5. Optical Image Quality & Acquisition Telemetry (DPI, Laplacian blur score, specular glare %, boundary detection)
+    6. Central Security Registries & Watchlists (National registry, SLTD lost/stolen, MHA/Interpol notices, identity links)
+    7. Section 65B (Evidence Act) Digital Seal & Chain of Custody (SHA-256 hash chaining, officer ID OFF-4819, terminal ID)
+  - **Deterministic History Linking:** Clicking any entry in the Screening History table correctly loads the inspection workstation with the exact scenario data and screening ID.
+
+---
+
+#### [REBRANDING] Decision Support & Document Situation Explanation Named "XAI"
+- **Commit:** `ac0c9a3` — *"Brand AI document situation explanation and risk engine as XAI"*
+- **Files Modified:** `js/components/RiskEnginePanel.js`, `js/components/EvidenceModal.js`, `js/components/NewScreening.js`, `js/components/ArchitectureView.js`, `js/components/SystemStatus.js`, `js/components/Dashboard.js`, `js/app.js`
+- **What Changed:**
+  - Standardized terminology across the system so that the engine explaining the document situation, risk indicators, and screening recommendations is explicitly branded as **XAI** (**Explainable AI**):
+    - `RiskEnginePanel.js`: Card titled `XAI Document Situation Assessment` with `🤖` indicator and `XAI EXPLANATION` badge; `XAI System Confidence`; `XAI Explainable Risk Factor & Situation Breakdown`; button `View XAI Evidence Dossier`.
+    - `EvidenceModal.js`: Modal title `XAI Explainable Evidence Dossier: <screening-id>`; subtitle `XAI Multi-Signal Forensic & Situation Explanation`; banner `🤖 XAI Document Situation & Overall Risk Assessment`; badge `XAI CONFIDENCE: 94.6%`.
+    - `NewScreening.js`: Pipeline stage 10 `XAI Risk & Situation Synthesis`; navigation tab `⚡ XAI Risk & Officer Action`.
+    - `Dashboard.js`: Banner `XAI DECISION-SUPPORT PROTOCOL: XAI-generated document situation explanations and risk metrics are investigative indicators to support officer judgement.`
+    - `ArchitectureView.js` & `SystemStatus.js`: Node 11 and telemetry table labeled `XAI Document Situation & Multi-Factor Risk Engine` with `XAI Multi-Factor Explainable Weighted Risk Model`.
+
+---
+
+## Current Repository State (as of 2026-09-27)
+
+### Branch: `main`
+### Latest Commit: `ac0c9a3`
+### Live Deployment: `https://border-guard-ai2.vercel.app`
+
 ```
 borderguard-ai/
 ├── context/
-│   ├── chat_history.md         ← [NEW] AI conversation log
-│   ├── specs_and_goals.md      ← [NEW] Project requirements & goals
-│   └── dev_history.md          ← [NEW] This file
+│   ├── chat_history.md         ← AI conversation log
+│   ├── specs_and_goals.md      ← Project requirements & goals
+│   └── dev_history.md          ← Complete development history (this file)
 ├── css/
 │   └── borderguard.css
 ├── js/
 │   ├── app.js
-│   ├── components/
-│   │   ├── AlertCenter.js
-│   │   ├── AnalyticsView.js
-│   │   ├── ArchitectureView.js
-│   │   ├── AuditTrailView.js
-│   │   ├── CrossDocumentPanel.js
-│   │   ├── Dashboard.js
-│   │   ├── DatabasePanel.js
-│   │   ├── DocumentViewer.js
-│   │   ├── EvidenceModal.js
-│   │   ├── FaceVerification.js
-│   │   ├── ForensicsPanel.js
-│   │   ├── Header.js
-│   │   ├── LandingLogin.js
-│   │   ├── MRZPanel.js
-│   │   ├── NewScreening.js
-│   │   ├── OCRPanel.js
-│   │   ├── OfficerActionModal.js
-│   │   ├── RiskEnginePanel.js
-│   │   ├── ScreeningHistory.js
-│   │   ├── SettingsView.js
-│   │   ├── Sidebar.js
-│   │   └── SystemStatus.js
-│   ├── data/
-│   │   ├── demoScenarios.js
-│   │   └── sampleDocuments.js
-│   └── services/
-│       ├── auditService.js
-│       ├── databaseService.js
-│       ├── faceService.js
-│       ├── mrzService.js
-│       ├── riskService.js
-│       ├── tamperingService.js
-│       └── validationService.js
-├── assets/                     ← empty
+│   ├── components/             ← 22 UI components
+│   ├── data/                   ← 12 demo scenarios & documents
+│   └── services/               ← 7 core verification services
+├── assets/                     ← (reserved for future static assets)
 ├── index.html
-├── local-dev-server.js         ← renamed from server.js
-├── vercel.json                 ← [NEW] forces static deployment
+├── local-dev-server.js
+├── vercel.json                 ← forces static deployment
 └── README.md
 ```

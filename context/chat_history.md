@@ -47,3 +47,45 @@ When asked to **update context**, append the latest conversation summary to the 
 ### Context Folder Created
 **User:** Requested creation of `context/` folder with 3 files: chat history, specs/requirements, and development history.  
 **AI:** Created all 3 files with role descriptions and populated them with current session data.
+
+---
+
+## Session 2 — 2026-09-27
+
+### SIH Prototype Upgrade
+**User:** Requested transforming the deployed prototype into a polished, realistic, technically credible AI-assisted border document screening and officer decision-support platform for SIH.  
+**AI:** Inspected all components and implemented:
+- 4 new realistic scenarios (Scenarios 9–12: MRZ/visual DOB mismatch, lost/stolen passport alert, multiple identity link, optical image quality recapture).
+- Live dynamic UTC clock and terminal checkpoint metadata.
+- Replaced unconvincing language (`Reject Entry`) with authentic border terminology (`Referral to Secondary Inspection Lane B`).
+- Dedicated tabs for ePassport chip cryptography and optical image quality telemetry.
+- Deterministic border screening and traveller reference identifiers.
+
+---
+
+### Dashboard 12-Scenario Grid
+**User:** Requested dashboard improvements.  
+**AI:** Built dynamic 12-scenario cards with status pills, risk scores, and direct one-click launcher buttons to immediately test any scenario in the inspection workstation.
+
+---
+
+### Technical QA Audit & Bug Fixes
+**User:** Instructed to act as a senior QA engineer and SIH evaluator to find inconsistencies and weak spots across all scenarios.  
+**AI:** Identified and resolved key issues:
+- Fixed ICAO 9303 modulo-10 checksum validation algorithms.
+- Resolved passport number collision for Amita Sharma (Scenario 11) by assigning independent Indian passport series `S8921450`.
+- Expanded Evidence Dossier into an exhaustive 7-section multi-signal forensic breakdown with Section 65B cryptographic chain of custody.
+- Fixed screening history table linking to correctly load selected historical screening with its exact captured data.
+
+---
+
+### Technology Architecture Deep Dive
+**User:** Asked to explain on what technology this works.  
+**AI:** Provided comprehensive 10-layer technical breakdown covering Optical Acquisition, Neural OCR, ICAO 9303 Checksum Engine, Forensic Image Tampering (ELA/spectral noise), Biometric Cosine Embedding, ePassport Cryptography, Central Registries, Explainable Risk Engine, and Section 65B SHA-256 Ledger.
+
+---
+
+### XAI Rebranding
+**User:** Requested: *"okay I want one thing to change.. where our AI explains the document situation, give it's name as XAI"*.  
+**AI:** Systematically rebranded all explanation components, situation assessments, risk factor contribution charts, evidence dossiers, and telemetry modules to explicitly name the decision-support engine **XAI** (**Explainable AI**). Committed and pushed to `main` (`ac0c9a3`).
+
